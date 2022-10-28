@@ -64,7 +64,7 @@ const App = () => {
 					getDocs(collection(db, 'users')).then((querySnapshot) => {
 						const userNotes = []
 						querySnapshot.forEach((doc) => {
-							if (doc.data().uid === user.uid) {
+							if (doc.id === user.uid) {
 								userNotes.push(...doc.data().notes)
 							}
 						})

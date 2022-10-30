@@ -13,7 +13,6 @@ const Signin = ({ login }) => {
 	const [form, setForm] = useState({
 		email: '',
 		password: '',
-		// dontRemember: false,
 	})
 	const [validated, setValidated] = useState(false)
 	const [errors, setErrors] = useState({})

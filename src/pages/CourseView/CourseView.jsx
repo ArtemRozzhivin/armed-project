@@ -14,6 +14,7 @@ import { auth, withAuthentication } from '../../hoc/protected'
 import { db } from '../../firebaseConfig'
 import { v4 as uuidv4 } from 'uuid'
 import _isDate from 'lodash/isDate'
+import { typeTasks } from '../../redux/constants'
 
 
 
@@ -34,6 +35,7 @@ const CourseView = ({ courses, isLoading, error, user, setError, generateAlerts,
 		id: '',
 		value: '',
 	})
+
 	const notes = useMemo(() => _filter(user.notes, note => note.id === form.id), [user.notes, form.id])
 
 	const openModal = (id) => {
@@ -152,19 +154,24 @@ const CourseView = ({ courses, isLoading, error, user, setError, generateAlerts,
 										<div className='flex items-center'>
 											<h3 className='text-[16px] font-semibold'>{task.title}</h3>
 											{task.isLecture ? (
-												<h3 className='text-[16px] font-medium bg-amber-400 rounded-lg  ml-6 py-1 px-4 text-white	'>Лекція</h3>
+												<h3 className='text-[16px] font-medium bg-amber-400 rounded-lg  ml-6 py-1 px-4 text-white	'>{typeTasks.lecture}</h3>
 											) : (
-												<h3 className='text-[16px] font-medium bg-green-700	rounded-lg  ml-6 py-1 px-4 text-white	'>Практика</h3>
+												<h3 className='text-[16px] font-medium bg-green-700	rounded-lg  ml-6 py-1 px-4 text-white	'>{typeTasks.practical}</h3>
+											)}
+											{task.date.toDate() < new Date() ? (
+												<h3 className='text-[16px] font-medium bg-green-500 rounded-lg  ml-6 py-1 px-4 text-white	'>Upcoming</h3>
+											) : (
+												<h3 className='text-[16px] font-medium bg-red-500	rounded-lg  ml-6 py-1 px-4 text-white	'>Passed</h3>
 											)}
 										</div>
-										<div>
+										<div className='max-w-xl'>
 											<p className='mt-3'>{task.description}</p>
 										</div>
 									</div>
 									<div className='flex flex-col items-end'>
 										<div className='flex flex-col '>
 											<div className='flex'>
-												<p className='text-[13px] underline decoration-solid font-medium mr-2'>Термін здачі:</p>
+												<p className='text-[13px] underline decoration-solid font-medium mr-2'>Submission deadline:</p>
 												{new Date(task.date.toDate()) < new Date() ? (
 													<p className='text-[13px] text-red-600 font-medium'>{task.date.toDate().toLocaleDateString()}</p>
 												) : (
@@ -177,7 +184,7 @@ const CourseView = ({ courses, isLoading, error, user, setError, generateAlerts,
 								<div className='flex items-end justify-end '>
 									<Button onClick={() => openModal(task.id)} className='flex px-6 py-2 rounded-[4px] hover:bg-indigo-600/[.06] hover:text-indigo-600 active:bg-indigo-600/[.15]'>
 										<PencilSquareIcon className="mr-0.5 h-5 w-5 flex-shrink-0 text-gray-400" />
-										Draft
+										Notes
 									</Button>
 								</div>
 							</div>

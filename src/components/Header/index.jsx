@@ -65,11 +65,6 @@ const Header = ({ authenticated }) => {
 							{authenticated ? (
 								<>
 									<div onClick={() => buttonRef.current?.click()}>
-										<Link to={routes.user_settings} className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700'>
-											you
-										</Link>
-									</div>
-									<div onClick={() => buttonRef.current?.click()}>
 										<Link to={routes.dashboard} className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700'>
 											courses
 										</Link>

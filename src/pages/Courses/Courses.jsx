@@ -28,6 +28,20 @@ const Courses = ({ isLoading, courses, error }) => {
 		return <NoCourses />
 	}
 
+	const findLastTask = (tasks) => {
+		const lastTask = tasks[0]
+		// console.log(lastTask)
+		if (new Date(lastTask.date.toDate()) <= new Date()) {
+			return null
+		}
+
+		if (lastTask) {
+			return lastTask
+		}
+
+		return null
+	}
+
 	if (error && !isLoading) {
 		return (
 			<div>
@@ -73,7 +87,7 @@ const Courses = ({ isLoading, courses, error }) => {
 									<p className="truncate text-sm font-medium text-indigo-600">{course.title}</p>
 									<div className="ml-2 flex flex-shrink-0">
 										<p className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-											{course.tasks[0].isLecture ? 'Lecture' : 'Practice'}
+											{course.tasks[0].isLecture ? 'Lecture' : 'Practical'}
 										</p>
 									</div>
 								</div>
@@ -91,14 +105,17 @@ const Courses = ({ isLoading, courses, error }) => {
 										<div className='mx-8'>
 											<p className="flex items-center text-sm text-gray-500">
 												<DocumentTextIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-												Last task: {course.tasks[course.tasks.length - 1].title}
+												Last task: {findLastTask(course.tasks) ? findLastTask(course.tasks).title : 'No tasks'}
 											</p>
 										</div>
 										<div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-											<CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-											<p>
-                      Closing on {course.tasks[course.tasks.length - 1].date.toDate().toLocaleDateString()}
-											</p>
+											{findLastTask(course.tasks) && (
+												<>
+													<CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" /><p>
+														Closing on {findLastTask(course.tasks)?.date?.toDate().toLocaleDateString()}
+													</p>
+												</>
+											)}
 										</div>
 									</div>
 

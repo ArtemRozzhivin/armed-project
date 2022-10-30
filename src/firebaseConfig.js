@@ -13,19 +13,19 @@ import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
 
-	apiKey: 'AIzaSyDZ6_Uq_eaUx9emEUz9cLoOjNNCYJDPe4s',
+	apiKey: '',
 
-	authDomain: 'technical-assesment-1a151.firebaseapp.com',
+	authDomain: '',
 
-	databaseURL: 'https://technical-assesment-1a151-default-rtdb.europe-west1.firebasedatabase.app',
+	databaseURL: '',
 
-	projectId: 'technical-assesment-1a151',
+	projectId: '',
 
-	storageBucket: 'technical-assesment-1a151.appspot.com',
+	storageBucket: '',
 
-	messagingSenderId: '575803030384',
+	messagingSenderId: '',
 
-	appId: '1:575803030384:web:70c8a3ae659bfb6bdbedb5'
+	appId: ''
 
 }
 

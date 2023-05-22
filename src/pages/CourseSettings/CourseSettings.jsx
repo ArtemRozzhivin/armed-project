@@ -4,13 +4,14 @@ import _replace from 'lodash/replace'
 import _isEmpty from 'lodash/isEmpty'
 import _find from 'lodash/find'
 import _map from 'lodash/map'
+import _filter from 'lodash/filter'
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
 import { useLocation, useParams, useNavigate } from 'react-router-dom'
 import routes from '../../routes'
 import Table from '../../ui/Table'
 import Checkbox from '../../ui/Checkbox'
-import { doc, setDoc, collection } from 'firebase/firestore'
+import { doc, setDoc, collection, deleteDoc } from 'firebase/firestore'
 import { db } from '../../firebaseConfig'
 import Modal from '../../ui/Modal'
 
@@ -170,6 +171,43 @@ const CourseSettings = ({
 		}
 	}
 
+	const onCourseDelete = () => {
+		try {
+			const newCourses = _filter(courses, course => course.id !== id)
+			deleteDoc(doc(collection(db, 'courses'), course.id)).then(() => {
+				generateAlerts('Course deleted', 'success')
+				setCourses(newCourses)
+				navigate(routes.courses)
+			})
+		} catch (e) {
+			setError(e)
+		}
+	}
+
+	const onTaskDelete = () => {
+		try {
+			const newTasks = _filter(tasks, task => task.id !== task.id)
+			setDoc(doc(collection(db, 'courses'), course.id), {
+				...course,
+				tasks: newTasks,
+			}).then(() => {
+				generateAlerts('Task deleted', 'success')
+				setTasks(newTasks)
+				setCourses(_map(courses, course => {
+					if (course.id === id) {
+						return {
+							...course,
+							tasks: newTasks,
+						}
+					}
+					return course
+				}))
+			})
+		} catch (e) {
+			setError(e)
+		}
+	}
+
 	const onTaskEdit = (task) => {
 		try {
 			const newTasks = _map(tasks, t => {
@@ -277,7 +315,7 @@ const CourseSettings = ({
 										setAddTaskModal(true)
 									}}
 									hasDeleteMethod
-									onClickDeleteProject={() => { } } /><Button
+									onClickDeleteProject={() => onTaskDelete()} /><Button
 									onClick={() => setAddTaskModal(true)}
 									primary
 									type='button'
@@ -308,15 +346,16 @@ const CourseSettings = ({
 						>
             Save
 						</Button>
-
-						<Button
-							onClick={() => {}}
-							danger
-							type='button'
-							className='h-10 w-48 flex justify-center'
-						>
-            Delete
-						</Button>
+						{isSettings && (
+							<Button
+								onClick={() => onCourseDelete()}
+								danger
+								type='button'
+								className='h-10 w-48 flex justify-center'
+							>
+								Delete
+							</Button>
+						)}
 					</div>
 				</div>
 			</form>

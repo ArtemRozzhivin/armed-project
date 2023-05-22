@@ -6,6 +6,7 @@ import { coursesActions } from '../../../action/courses'
 
 export default function* logoutWorker() {
 	try {
+		console.log('logoutWorker')
 		yield call(removeAccessToken)
 		yield put(authActions.asyncLogout())
 		yield put(coursesActions.setCourses([]))

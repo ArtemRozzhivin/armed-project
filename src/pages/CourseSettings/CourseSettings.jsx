@@ -94,10 +94,10 @@ const CourseSettings = ({
 	const onSubmit = (form) => {
 		try {
 			if (isSettings) {
-				const newCourses = _map(courses, course => {
-					if (course.id === id) {
+				const newCourses = _map(courses, item => {
+					if (item.id === id) {
 						return {
-							...course,
+							...item,
 							...form,
 							admin: user.uid,
 						}
@@ -122,7 +122,6 @@ const CourseSettings = ({
 				setDoc(doc(collection(db, 'courses')), {
 					...form,
 					admin: user.uid,
-					id: Math.random().toString(36).substr(2, 9),
 					tasks: [],
 				}).then(() => {
 					generateAlerts('Course created', 'success')
@@ -147,10 +146,10 @@ const CourseSettings = ({
 			}).then(() => {
 				generateAlerts('Task created', 'success')
 				setTasks(newTasks)
-				setCourses(_map(courses, course => {
-					if (course.id === id) {
+				setCourses(_map(courses, item => {
+					if (item.id === id) {
 						return {
-							...course,
+							...item,
 							tasks: newTasks,
 						}
 					}
@@ -184,9 +183,9 @@ const CourseSettings = ({
 		}
 	}
 
-	const onTaskDelete = () => {
+	const onTaskDelete = (id) => {
 		try {
-			const newTasks = _filter(tasks, task => task.id !== task.id)
+			const newTasks = _filter(tasks, item => item.id !== task.id)
 			setDoc(doc(collection(db, 'courses'), course.id), {
 				...course,
 				tasks: newTasks,

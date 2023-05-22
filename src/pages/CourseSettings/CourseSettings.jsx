@@ -6,7 +6,7 @@ import _find from 'lodash/find'
 import _map from 'lodash/map'
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams, useNavigate } from 'react-router-dom'
 import routes from '../../routes'
 import Table from '../../ui/Table'
 import Checkbox from '../../ui/Checkbox'
@@ -24,6 +24,7 @@ const CourseSettings = ({
 	setCourses,
 }) => {
 	const { pathname } = useLocation()
+	const navigate = useNavigate()
 	const { id } = useParams()
 	const isSettings = !_isEmpty(id) && (_replace(routes.courses_settings, ':id', id) === pathname)
 	const course = useMemo(() => _find(courses, p => p.id === id) || {}, [courses, id])
@@ -48,8 +49,6 @@ const CourseSettings = ({
 	const [isBeenSubmitted, setIsBeenSubmitted] = React.useState(false)
 
 	useEffect(() => {
-		console.log(course)
-		console.log(isSettings)
 		if (isSettings && !_isEmpty(course)) {
 			setForm({
 				backgroundImage: course.backgroundImage,
@@ -110,6 +109,7 @@ const CourseSettings = ({
 				}).then(() => {
 					generateAlerts('Course updated', 'success')
 					setCourses(newCourses)
+					navigate(routes.courses)
 				})
 			} else {
 				const newCourses = [...courses, {
@@ -126,6 +126,7 @@ const CourseSettings = ({
 				}).then(() => {
 					generateAlerts('Course created', 'success')
 					setCourses(newCourses)
+					navigate(routes.courses)
 				})
 			}
 		} catch (e) {
@@ -135,7 +136,6 @@ const CourseSettings = ({
 
 	const onNewTask = () => {
 		try {
-			console.log(course)
 			const newTasks = [...tasks, {
 				...task,
 				id: Math.random().toString(36).substr(2, 9),
@@ -162,6 +162,11 @@ const CourseSettings = ({
 			console.log(e)
 		} finally {
 			setAddTaskModal(false)
+			setTask({
+				title: '',
+				description: '',
+				expiration_date: '',
+			})
 		}
 	}
 
@@ -193,6 +198,8 @@ const CourseSettings = ({
 			})
 		} catch (e) {
 			setError(e)
+		} finally {
+			setAddTaskModal(false)
 		}
 	}
 
@@ -257,14 +264,28 @@ const CourseSettings = ({
 					/>
 					{isSettings && (
 						!_isEmpty(tasks) ? (
-							<Table
-								results={tasks}
-								spreadsheetTitles={['Title', 'Description', 'Expiration date', 'Is lecture', '', '']}
-								fieldsName={['title', 'description', 'expiration_date', 'isLecture']}
-								onEdit={(task) => onTaskEdit(task)}
-								hasDeleteMethod
-								onClickDeleteProject={() => {}}
-							/>
+							<div className='flex flex-col justify-center items-center'>
+								<Table
+									results={tasks}
+									spreadsheetTitles={['Title', 'Description', 'Expiration date', 'Is lecture', '', '']}
+									fieldsName={['title', 'description', 'expiration_date', 'isLecture']}
+									onEdit={(task) => {
+										setTask({
+											...task,
+											isSettings: true,
+										})
+										setAddTaskModal(true)
+									}}
+									hasDeleteMethod
+									onClickDeleteProject={() => { } } /><Button
+									onClick={() => setAddTaskModal(true)}
+									primary
+									type='button'
+									className='h-10 w-48 flex justify-center ml-4'
+								>
+									Add task
+								</Button>
+							</div>
 						) : (
 							<div className='flex justify-center items-center mt-8'>
 								<p className='text-gray-500'>No tasks</p>
@@ -355,7 +376,7 @@ const CourseSettings = ({
 								name='isLecture'
 								id='isLecture'
 								label='isLecture'
-								value={task.isLecture}
+								checked={task.isLecture || false}
 								className='max-w-[400px] w-full'
 								onChange={(e) => {
 									if (e.target.value.length >= 0) {
@@ -365,12 +386,18 @@ const CourseSettings = ({
 							/>
 							<div className='flex justify-center gap-40  mt-8'>
 								<Button
-									onClick={() => onNewTask()}
+									onClick={() => {
+										if (task?.isSettings) {
+											onTaskEdit(task)
+										} else {
+											onNewTask()
+										}
+									}}
 									primary
 									type='button'
 									className='h-10 w-48 flex justify-center'
 								>
-								Save
+									{task?.isSettings ? 'Update' : 'Add'}
 								</Button>
 							</div>
 						</div>
@@ -386,10 +413,8 @@ CourseSettings.propTypes = {
 	isLoading: PropTypes.bool.isRequired,
 	user: PropTypes.object.isRequired,
 	courses: PropTypes.array.isRequired,
-	error: PropTypes.object.isRequired,
 	setError: PropTypes.func.isRequired,
 	generateAlerts: PropTypes.func.isRequired,
-	setUser: PropTypes.func.isRequired,
 	setCourses: PropTypes.func.isRequired,
 }
 

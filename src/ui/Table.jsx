@@ -29,13 +29,17 @@ const Table = ({
 				<tbody>
 					{_map(results, (param) => {
 						return (
-							<tr key={param.id}>
+							<tr key={param.id || param.title}>
 								{_map(fieldsName, (fieldName, index) => {
 									let renderData
 									if (typeof param[fieldName] === 'boolean') {
 										renderData = param[fieldName] ? 'Y' : 'N'
 									} else if (_includes(checkDataRes, fieldName)) {
-										renderData = param[fieldName].toDate().toLocaleDateString()
+										try {
+											renderData = param[fieldName].toDate().toLocaleDateString()
+										} catch (e) {
+											renderData = param[fieldName]
+										}
 									} else {
 										renderData = param[fieldName]
 									}
@@ -72,7 +76,6 @@ Table.propTypes = {
 	results: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 	spreadsheetTitles: PropTypes.arrayOf(PropTypes.string).isRequired,
 	fieldsName: PropTypes.arrayOf(PropTypes.string).isRequired,
-	editRoutes: PropTypes.string.isRequired,
 	hasDeleteMethod: PropTypes.bool,
 	onClickDeleteProject: PropTypes.func,
 	onEdit: PropTypes.func.isRequired,

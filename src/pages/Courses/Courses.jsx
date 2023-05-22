@@ -36,7 +36,7 @@ const Courses = ({ isLoading, courses, error }) => {
 		let date
 
 		try {
-			date = new Date(lastTask.date.toDate()) <= new Date()
+			date = new Date(lastTask.expiration_date) <= new Date()
 		} catch (e) {
 			date = false
 		}
@@ -128,7 +128,7 @@ const Courses = ({ isLoading, courses, error }) => {
 											{findLastTask(course.tasks) && (
 												<>
 													<CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" /><p>
-														Closing on {findLastTask(course.tasks)?.date?.toDate() ? findLastTask(course.tasks)?.date?.toDate().toLocaleDateString() : findLastTask(course.tasks)?.expiration_date}
+														Closing on {findLastTask(course.tasks)?.expiration_date}
 													</p>
 												</>
 											)}

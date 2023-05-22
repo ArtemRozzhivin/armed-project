@@ -36,7 +36,7 @@ const Table = ({
 										renderData = param[fieldName] ? 'Y' : 'N'
 									} else if (_includes(checkDataRes, fieldName)) {
 										try {
-											renderData = param[fieldName].toDate().toLocaleDateString()
+											renderData = param[fieldName]
 										} catch (e) {
 											renderData = param[fieldName]
 										}

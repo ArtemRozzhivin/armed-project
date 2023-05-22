@@ -33,7 +33,7 @@ const CourseView = ({ courses, isLoading, error, user, setError, generateAlerts,
 	const { id } = useParams()
 	const course = useMemo(() => _find(courses, p => p.id === id) || {}, [courses, id])
 	const soon = useMemo(() => _filter(course.tasks, task => {
-		const date = task?.date?.toDate() ? task?.date?.toDate() : task?.expiration_date
+		const date = task?.expiration_date
 		new Date(date) > new Date() || null
 	}), [course])
 	const [showModal, setShowModal] = useState(false)
@@ -152,7 +152,7 @@ const CourseView = ({ courses, isLoading, error, user, setError, generateAlerts,
 						<div key={index} className='flex items-center justify-between mt-4'>
 							<p className='text-gray-500'>{task.title}</p>
 							<span className='text-gray-500 mx-1'>|</span>
-							<p className='text-gray-500'>{task?.date?.toDate() ? task.date.toDate().toLocaleDateString() : task.expiration_date}</p>
+							<p className='text-gray-500'>{task.expiration_date}</p>
 						</div>
 					))}
 				</div>
@@ -169,7 +169,7 @@ const CourseView = ({ courses, isLoading, error, user, setError, generateAlerts,
 											) : (
 												<h3 className='text-[16px] font-medium bg-green-700	rounded-lg  ml-6 py-1 px-4 text-white	'>{typeTasks.practical}</h3>
 											)}
-											{(task?.date?.toDate() ? task?.date?.toDate() : new Date(task.expiration_date)) < new Date() ? (
+											{!new Date(task.expiration_date) < new Date() ? (
 												<h3 className='text-[16px] font-medium bg-green-500 rounded-lg  ml-6 py-1 px-4 text-white	'>Upcoming</h3>
 											) : (
 												<h3 className='text-[16px] font-medium bg-red-500	rounded-lg  ml-6 py-1 px-4 text-white	'>Passed</h3>
@@ -183,10 +183,10 @@ const CourseView = ({ courses, isLoading, error, user, setError, generateAlerts,
 										<div className='flex flex-col '>
 											<div className='flex'>
 												<p className='text-[13px] underline decoration-solid font-medium mr-2'>Submission deadline:</p>
-												{(task?.date?.toDate() ? task?.date?.toDate() : new Date(task.expiration_date)) < new Date() ? (
-													<p className='text-[13px] text-red-600 font-medium'>{task?.date?.toDate() ? task?.date?.toDate() : task.expiration_date}</p>
+												{new Date(task.expiration_date) < new Date() ? (
+													<p className='text-[13px] text-red-600 font-medium'>{task.expiration_date}</p>
 												) : (
-													<p className='text-[13px] text-green-600 font-medium'>{task?.date?.toDate() ? task?.date?.toDate() : task.expiration_date}</p>
+													<p className='text-[13px] text-green-600 font-medium'>{task.expiration_date}</p>
 												)}
 											</div>
 										</div>

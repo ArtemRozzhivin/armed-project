@@ -13,21 +13,22 @@ import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
 
-	apiKey: '',
+	apiKey: 'AIzaSyDZ6_Uq_eaUx9emEUz9cLoOjNNCYJDPe4s',
 
-	authDomain: '',
+	authDomain: 'technical-assesment-1a151.firebaseapp.com',
 
-	databaseURL: '',
+	databaseURL: 'https://technical-assesment-1a151-default-rtdb.europe-west1.firebasedatabase.app',
 
-	projectId: '',
+	projectId: 'technical-assesment-1a151',
 
-	storageBucket: '',
+	storageBucket: 'technical-assesment-1a151.appspot.com',
 
-	messagingSenderId: '',
+	messagingSenderId: '575803030384',
 
-	appId: ''
+	appId: '1:575803030384:web:70c8a3ae659bfb6bdbedb5'
 
 }
+
 
 
 // Initialize Firebase

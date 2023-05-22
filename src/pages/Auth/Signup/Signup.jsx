@@ -140,12 +140,12 @@ const Signup = ({ signup }) => {
 						hint={beenSubmitted ? errors.tos : ''}
 					/>
 					<div className='pt-1 flex justify-between mt-3'>
-						<Link to={routes.singin} className='underline text-blue-600 hover:text-indigo-800'>
-							Sign in
-						</Link>
 						<Button type='submit' loading={isLoading} primary large>
 							Sing Up
 						</Button>
+						<Link to={routes.singin} className='underline text-blue-600 hover:text-indigo-800'>
+							Sign in
+						</Link>
 					</div>
 				</form>
 			</div>

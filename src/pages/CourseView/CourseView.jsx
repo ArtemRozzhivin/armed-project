@@ -15,6 +15,8 @@ import { db } from '../../firebaseConfig'
 import { v4 as uuidv4 } from 'uuid'
 import _isDate from 'lodash/isDate'
 import { typeTasks } from '../../redux/constants'
+import { Link } from 'react-router-dom'
+import routes from '../../routes'
 
 
 
@@ -127,11 +129,16 @@ const CourseView = ({ courses, isLoading, error, user, setError, generateAlerts,
 
 	return (
 		<div className=" overflow-hidden max-w-[1110px] mx-auto ">
-			<div className='rounded-md mt-6 w-full h-64 flex items-end drop-shadow-lg' style={{ backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundImage: `url(${course.backgroundImage || ''})` }}>
+			<div className='rounded-md mt-6 w-full h-64 flex justify-between items-end drop-shadow-lg' style={{ backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundImage: `url(${course.backgroundImage || ''})` }}>
 				<div className='flex flex-col p-4'>
 					<p className='text-2xl font-bold text-white'>{course.title}</p>
 					<p className='text-lg font-semibold text-white'>{course.description}</p>
 				</div>
+				{course?.admin === user.uid && (
+					<Link to={routes.courses_settings} className='flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700'>
+						Edit course
+					</Link>
+				)}
 			</div>
 			<div className='flex items-start justify-between'>
 
@@ -147,7 +154,7 @@ const CourseView = ({ courses, isLoading, error, user, setError, generateAlerts,
 				</div>
 				<div className='w-full'>
 					<div className=''>
-						{course.tasks && course.tasks.map((task, index) => (
+						{!_isEmpty(course?.tasks) && course.tasks.map((task, index) => (
 							<div key={index} className='cursor-pointer shadow-block-course border-l-[5px] border-indigo-600'>
 								<div className='min-h-14 mt-8  pt-4 px-4 flex justify-between '>
 									<div >

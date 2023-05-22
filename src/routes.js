@@ -5,7 +5,7 @@ const routes = Object.freeze({
 	courses: '/courses',
 	user_settings: '/settings',
 	new_courses: '/courses/new',
-	courses_settings: '/courses/settings/:id',
+	courses_settings: '/courses/:id/settings',
 	courseView: '/courses/:id',
 })
 

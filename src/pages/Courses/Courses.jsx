@@ -6,6 +6,7 @@ import _isEmpty from 'lodash/isEmpty'
 import { DocumentTextIcon, XCircleIcon } from '@heroicons/react/24/solid'
 import { auth, withAuthentication } from '../../hoc/protected'
 import { Link } from 'react-router-dom'
+import routes from '../../routes'
 
 const NoCourses = () => (
 	<div className='mt-5'>
@@ -29,6 +30,10 @@ const Courses = ({ isLoading, courses, error }) => {
 	}
 
 	const findLastTask = (tasks) => {
+		if (_isEmpty(tasks)) {
+			return null
+		}
+
 		const lastTask = tasks[0]
 		// console.log(lastTask)
 		if (new Date(lastTask.date.toDate()) <= new Date()) {
@@ -76,8 +81,12 @@ const Courses = ({ isLoading, courses, error }) => {
 
 	return (
 		<div className=" overflow-hidden max-w-[1110px] mx-auto ">
-
-			<p className='my-6 text-2xl font-semibold'>Courses</p>
+			<div className='flex justify-between items-center'>
+				<p className='my-6 text-2xl font-semibold'>Courses</p>
+				<Link to={routes.new_courses} className='flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700'>
+					Add course
+				</Link>
+			</div>
 			<ul role="list">
 				{_map(courses, (course, key) => (
 					<li className='shadow sm:rounded-md' key={key}>
@@ -87,7 +96,7 @@ const Courses = ({ isLoading, courses, error }) => {
 									<p className="truncate text-sm font-medium text-indigo-600">{course.title}</p>
 									<div className="ml-2 flex flex-shrink-0">
 										<p className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-											{course.tasks[0].isLecture ? 'Lecture' : 'Practical'}
+											{!_isEmpty(course.tasks) && course.tasks[0].isLecture ? 'Lecture' : 'Practical'}
 										</p>
 									</div>
 								</div>

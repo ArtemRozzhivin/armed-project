@@ -24,6 +24,7 @@ const Signin = lazy(() => import('./pages/Auth/SignIn'))
 const Courses = lazy(() => import('./pages/Courses'))
 const Singup = lazy(() => import('./pages/Auth/Signup'))
 const CourseView = lazy(() => import('./pages/CourseView'))
+const CourseSettings = lazy(() => import('./pages/CourseSettings'))
 
 const Fallback = () => {
 	const [showLoader, setShowLoader] = useState(false)
@@ -122,6 +123,8 @@ const App = () => {
 					<Route path={routes.singin} element={<Signin />} />
 					<Route path={routes.singup} element={<Singup />} />
 					<Route path={routes.courseView} element={<CourseView />} />
+					<Route path={routes.courses_settings} element={<CourseSettings />} />
+					<Route path={routes.new_courses} element={<CourseSettings />} />
 					<Route
 						path="*"
 						element={<Navigate to="/" replace />}

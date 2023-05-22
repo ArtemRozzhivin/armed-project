@@ -102,7 +102,7 @@ const CourseSettings = ({
 							admin: user.uid,
 						}
 					}
-					return course
+					return item
 				})
 				setDoc(doc(collection(db, 'courses'), course.id), {
 					...course,
@@ -122,6 +122,7 @@ const CourseSettings = ({
 				setDoc(doc(collection(db, 'courses')), {
 					...form,
 					admin: user.uid,
+					id: Math.random().toString(36).substr(2, 9),
 					tasks: [],
 				}).then(() => {
 					generateAlerts('Course created', 'success')
@@ -153,7 +154,7 @@ const CourseSettings = ({
 							tasks: newTasks,
 						}
 					}
-					return course
+					return item
 				}))
 				setAddTaskModal(false)
 			})
@@ -192,14 +193,14 @@ const CourseSettings = ({
 			}).then(() => {
 				generateAlerts('Task deleted', 'success')
 				setTasks(newTasks)
-				setCourses(_map(courses, course => {
-					if (course.id === id) {
+				setCourses(_map(courses, item => {
+					if (item.id === id) {
 						return {
-							...course,
+							...item,
 							tasks: newTasks,
 						}
 					}
-					return course
+					return item
 				}))
 			})
 		} catch (e) {
@@ -223,14 +224,14 @@ const CourseSettings = ({
 			}).then(() => {
 				generateAlerts('Task updated', 'success')
 				setTasks(newTasks)
-				setCourses(_map(courses, course => {
-					if (course.id === id) {
+				setCourses(_map(courses, item => {
+					if (item.id === id) {
 						return {
-							...course,
+							...item,
 							tasks: newTasks,
 						}
 					}
-					return course
+					return item
 				}))
 			})
 		} catch (e) {

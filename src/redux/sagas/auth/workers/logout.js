@@ -11,7 +11,7 @@ export default function* logoutWorker() {
 		yield put(authActions.asyncLogout())
 		yield put(coursesActions.setCourses([]))
 		yield put(coursesActions.setCoursesLoading(true))
-		yield put(errorsAction.setError(null))
+		yield put(errorsAction.clearErrors(null))
 	} catch (error) {
 		yield put(errorsAction.loginFailed(error.message))
 	} finally {

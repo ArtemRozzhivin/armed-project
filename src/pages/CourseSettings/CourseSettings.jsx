@@ -113,16 +113,16 @@ const CourseSettings = ({
 					navigate(routes.courses)
 				})
 			} else {
+				const id = Math.random().toString(36).substr(2, 9)
 				const newCourses = [...courses, {
 					...form,
 					admin: user.uid,
-					id: Math.random().toString(36).substr(2, 9),
+					id,
 					tasks: [],
 				}]
-				setDoc(doc(collection(db, 'courses')), {
+				setDoc(doc(collection(db, 'courses'), id), {
 					...form,
 					admin: user.uid,
-					id: Math.random().toString(36).substr(2, 9),
 					tasks: [],
 				}).then(() => {
 					generateAlerts('Course created', 'success')
@@ -132,6 +132,12 @@ const CourseSettings = ({
 			}
 		} catch (e) {
 			setError(e)
+		} finally {
+			setForm({
+				backgroundImage: '',
+				description: '',
+				title: '',
+			})
 		}
 	}
 

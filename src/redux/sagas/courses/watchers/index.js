@@ -1,9 +1,9 @@
-import { fork } from 'redux-saga/effects'
+// import { fork } from 'redux-saga/effects'
 
-import initialise from '../workers/initialise'
+// import initialise from '../workers/initialise'
 
-function* mainCoursesSaga() {
-	yield fork(initialise)
-}
+// function* mainCoursesSaga() {
+// 	yield fork(initialise)
+// }
 
-export default mainCoursesSaga
+// export default mainCoursesSaga

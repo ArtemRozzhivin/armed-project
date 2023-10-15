@@ -1,5 +1,4 @@
 import React from 'react'
-import { withAuthentication, auth } from '../../hoc/protected'
 import { Link } from 'react-router-dom'
 import routes from '../../routes'
 
@@ -18,4 +17,4 @@ const MainPage = () => {
 	)
 }
 
-export default React.memo(withAuthentication(MainPage, auth.notAuthenticated))
+export default React.memo(MainPage)

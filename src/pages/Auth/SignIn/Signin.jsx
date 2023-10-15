@@ -14,6 +14,7 @@ const Signin = ({ login }) => {
 		email: '',
 		password: '',
 	})
+	//const isSettings = if route exist 'new'
 	const [validated, setValidated] = useState(false)
 	const [errors, setErrors] = useState({})
 	const [beenSubmitted, setBeenSubmitted] = useState(false)

@@ -57,7 +57,7 @@ const Signup = ({ signup }) => {
 
 	useEffect(() => {
 		validate()
-  }, [form]) // eslint-disable-line
+	}, [form]) // eslint-disable-line
 
 	const onSubmit = data => {
 		if (!isLoading) {

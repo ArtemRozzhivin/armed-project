@@ -10,7 +10,7 @@ export const auth = {
 	},
 	notAuthenticated: {
 		selector: state => !state.auth.authenticated,
-		redirectPath: routes.courses,
+		redirectPath: routes.main,
 	},
 }
 

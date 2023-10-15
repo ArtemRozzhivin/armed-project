@@ -21,10 +21,7 @@ import { collection, getDocs } from 'firebase/firestore'
 
 const MainPage = lazy(() => import('./pages/MainPage'))
 const Signin = lazy(() => import('./pages/Auth/SignIn'))
-const Courses = lazy(() => import('./pages/Courses'))
 const Singup = lazy(() => import('./pages/Auth/Signup'))
-const CourseView = lazy(() => import('./pages/CourseView'))
-const CourseSettings = lazy(() => import('./pages/CourseSettings'))
 
 const Fallback = () => {
 	const [showLoader, setShowLoader] = useState(false)
@@ -62,14 +59,8 @@ const App = () => {
 		if (!authenticated) {
 			onAuthStateChanged(auth, (user) => {
 				if (user) {
-					getDocs(collection(db, 'users')).then((querySnapshot) => {
-						const userNotes = []
-						querySnapshot.forEach((doc) => {
-							if (doc.id === user.uid) {
-								userNotes.push(...doc.data().notes)
-							}
-						})
-						dispatch(authActions.loginSuccess({...user, notes: userNotes}))
+					getDocs(collection(db, 'users')).then(() => {
+						dispatch(authActions.loginSuccess({...user }))
 					})
 				} else {
 					dispatch(authActions.logout())
@@ -119,12 +110,8 @@ const App = () => {
 			<Suspense fallback={<Fallback />} >
 				<Routes>
 					<Route index element={<MainPage />} />
-					<Route path={routes.courses} element={<Courses />} />
 					<Route path={routes.singin} element={<Signin />} />
 					<Route path={routes.singup} element={<Singup />} />
-					<Route path={routes.courseView} element={<CourseView />} />
-					<Route path={routes.courses_settings} element={<CourseSettings />} />
-					<Route path={routes.new_courses} element={<CourseSettings />} />
 					<Route
 						path="*"
 						element={<Navigate to="/" replace />}

@@ -3,6 +3,14 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
+import {
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+	signOut,
+	GoogleAuthProvider,
+	signInWithPopup,
+} from 'firebase/auth'
+
 
 // TODO: Add SDKs for Firebase products that you want to use
 
@@ -13,20 +21,31 @@ import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
 
-	apiKey: 'AIzaSyDZ6_Uq_eaUx9emEUz9cLoOjNNCYJDPe4s',
+	apiKey: 'AIzaSyAIU5mwSmomcj8sOA3vF8cwPIuB_gYeHQ0',
 
-	authDomain: 'technical-assesment-1a151.firebaseapp.com',
+	authDomain: 'maksim-car-armed.firebaseapp.com',
 
-	databaseURL: 'https://technical-assesment-1a151-default-rtdb.europe-west1.firebasedatabase.app',
+	projectId: 'maksim-car-armed',
 
-	projectId: 'technical-assesment-1a151',
+	storageBucket: 'maksim-car-armed.appspot.com',
 
-	storageBucket: 'technical-assesment-1a151.appspot.com',
+	messagingSenderId: '733477616419',
 
-	messagingSenderId: '575803030384',
+	appId: '1:733477616419:web:a0ec1bf81b78d5e1756a96'
 
-	appId: '1:575803030384:web:70c8a3ae659bfb6bdbedb5'
+}
 
+export const signup = (email, password) =>
+	createUserWithEmailAndPassword(auth, email, password)
+
+export const login = (email, password) =>
+	signInWithEmailAndPassword(auth, email, password)
+
+export const logout = () => signOut(auth)
+
+export const loginWithGoogle = () => {
+	const googleProvide = new GoogleAuthProvider()
+	return signInWithPopup(auth, googleProvide)
 }
 
 

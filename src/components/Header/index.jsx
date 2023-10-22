@@ -26,6 +26,17 @@ const Header = ({ authenticated }) => {
 								<span>courses</span>
 							</Link>
 						</div>
+
+						<div>
+							<Link to={routes.main} className='text-base font-medium select-none text-white hover:text-indigo-50 py-2 px-3  hover:bg-indigo-500 rounded-md'>
+										Панель
+							</Link>
+							<Link to={routes.users} className='text-base font-medium select-none text-white hover:text-indigo-50 py-2 px-3  hover:bg-indigo-500 rounded-md'>
+										Користувачі
+							</Link>
+
+						</div>
+
 						<div className='hidden md:flex justify-center items-center flex-wrap ml-1 md:ml-10 space-y-1 sm:space-y-0 space-x-2 md:space-x-4'>
 							{authenticated ? (
 								<>

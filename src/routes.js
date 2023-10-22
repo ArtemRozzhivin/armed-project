@@ -4,6 +4,7 @@ const routes = Object.freeze({
 	main: '/',
 	courses: '/courses',
 	user_settings: '/settings',
+	users: '/users'
 })
 
 export default routes

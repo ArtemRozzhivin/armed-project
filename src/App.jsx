@@ -22,8 +22,9 @@ import { collection, getDocs } from 'firebase/firestore'
 const MainPage = lazy(() => import('./pages/MainPage'))
 const Signin = lazy(() => import('./pages/Auth/SignIn'))
 const Singup = lazy(() => import('./pages/Auth/Signup'))
-const Dashbord = lazy(() => import('./pages/Dashbord'))
 const Users = lazy(() => import('./pages/Users'))
+const Brigades = lazy(() => import('./pages/Brigades'))
+
 
 
 const Fallback = () => {
@@ -115,8 +116,8 @@ const App = () => {
 					<Route index element={<MainPage />} />
 					<Route path={routes.singin} element={<Signin />} />
 					<Route path={routes.singup} element={<Singup />} />
-					<Route path={routes.main} element={<Dashbord />} />
 					<Route path={routes.users} element={<Users />} />            
+					<Route path={routes.new_brigade} element={<Brigades />} />
 					<Route
 						path="*"
 						element={<Navigate to="/" replace />}

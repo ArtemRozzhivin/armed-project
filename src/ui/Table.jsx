@@ -45,7 +45,17 @@ const Table = ({
 									}
 									return (
 										<td key={index} className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-											<p className='text-gray-900 whitespace-no-wrap'>{renderData}</p>
+											{Array.isArray(renderData) ? 
+												<Button primary large className='h-10' onClick={() => {
+													onEdit(param)
+												}}>
+													<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+														<path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+													</svg>
+												</Button> : 
+												<p className='text-gray-900 whitespace-no-wrap'>{renderData}</p>
+											}
+											{/* <p className='text-gray-900 whitespace-no-wrap'>{renderData}</p> */}
 										</td>
 									)
 								})}
@@ -53,11 +63,10 @@ const Table = ({
 									<Button primary large className='h-10' onClick={() => {
 										onEdit(param)
 									}}>
-										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-											<path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-										</svg>
-
+                      Edit
 									</Button>
+
+                  
 									{
 										hasDeleteMethod && (
 											<Button onClick={() => onClickDeleteProject(param.id)} danger large className='h-10 ml-4'>

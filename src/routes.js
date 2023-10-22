@@ -4,7 +4,9 @@ const routes = Object.freeze({
 	main: '/',
 	courses: '/courses',
 	user_settings: '/settings',
-	users: '/users'
+	users: '/users',
+	new_brigade: '/brigade/new',
+	edit_brigade: '/brigades/:id'
 })
 
 export default routes

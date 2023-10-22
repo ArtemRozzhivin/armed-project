@@ -3,6 +3,7 @@ import _map from 'lodash/map'
 import _includes from 'lodash/includes'
 import PropTypes from 'prop-types'
 import Button from './Button'
+import { convertDate } from '../utils/convertDate'
 
 const checkDataRes = ['createdAt', 'updatedAt', 'updated', 'created', 'expiration_date']
 
@@ -53,7 +54,7 @@ const Table = ({
 														<path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
 													</svg>
 												</Button> : 
-												<p className='text-gray-900 whitespace-no-wrap'>{renderData}</p>
+												<p className='text-gray-900 whitespace-no-wrap'>{typeof renderData === 'object' ? convertDate(renderData) :renderData}</p>
 											}
 											{/* <p className='text-gray-900 whitespace-no-wrap'>{renderData}</p> */}
 										</td>

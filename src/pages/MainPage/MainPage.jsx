@@ -34,30 +34,7 @@ const MainPage = ({ brigades }) => {
 			</div>
       
 			<div className='py-8'>
-				<Table hasDeleteMethod fieldsName={['name', 'creator', 'imgUrl', 'created', 'updated', 'cars']} results={[{
-					name: '43 окрема',
-					creator: 'temchik200352@gmail.com',
-					imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvFBa3G11OUBYADP7ouSBgwiiRzSYorF4dfg&usqp=CAU',
-					created: '12.12.2021',
-					updated: '12.12.2021',
-					cars: [
-						'Nissan',
-						'Volvo',
-						'KIA'
-					],
-				}, {
-					name: '22 штурмова',
-					creator: 'temchik200352@gmail.com',
-					imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvFBa3G11OUBYADP7ouSBgwiiRzSYorF4dfg&usqp=CAU',
-					created: '12.12.2021',
-					updated: '12.12.2021',
-					cars: [
-						'Nissan',
-						'Volvo',
-						'KIA'
-					],
-
-				}]} spreadsheetTitles={['Назва', 'Ким створена', 'Картинка', 'Коли створено', 'Оновлено', 'Автомобілі', 'Змінити / Видалити']}>
+				<Table hasDeleteMethod fieldsName={['name', 'creator', 'imgUrl', 'created', 'updated', 'cars']} results={brigades} spreadsheetTitles={['Назва', 'Ким створена', 'Картинка', 'Коли створено', 'Оновлено', 'Автомобілі', 'Змінити / Видалити']}>
 				</Table>
 			</div>
 		</div>

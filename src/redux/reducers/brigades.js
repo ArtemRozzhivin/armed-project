@@ -1,26 +1,20 @@
-// // import { createSlice } from '@reduxjs/toolkit'
+import types from '../action/brigades/types'
 
 
-// const initialState = {
-// 	brigades: [],
-// }
+const initialState = {
+	brigades: [],
+}
 
-// const projectsSlice = createSlice({
-// 	name: 'projects',
-// 	initialState,
-// 	reducers: {
-// 		setProjects(state, { payload }) {
-// 			if (payload.shared) {
-// 				state.isLoadingShared = false
-// 				state.sharedProjects = payload.projects 
-// 			} else {
-// 				state.isLoading = false
-// 				state.projects = payload.projects 
-// 			}
-// 		},
-// 	},
-// })
 
-// export const projectsActions = projectsSlice.actions
+const brigadesReducer = (state = initialState, { type, payload }) => {
+	switch (type) {
+	case types.SET_BRIGADES:
+		return { ...state, brigades: payload.brigades }
 
-// export default projectsSlice.reducer
+
+	default:
+		return state
+	}
+}
+
+export default brigadesReducer

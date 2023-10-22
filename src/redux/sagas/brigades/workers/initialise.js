@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects'
 import Debug from 'debug'
 
 import { getAccessToken } from '../../../../utils/accessToken'
-import { coursesActions } from '../../../action/courses'
+import { brigadesActions } from '../../../action/brigades'
 import { db } from '../../../../firebaseConfig'
 import { collection, getDocs } from 'firebase/firestore'
 
@@ -14,17 +14,18 @@ export default function* initialise() {
 
 		if (token) {
 			let brigades
-			yield put(coursesActions.setCoursesLoading(true))
+			yield put(brigadesActions.setBrigadesLoading(true))
 			try {
 				const querySnapshot =  yield call(getDocs, collection(db, 'brigades'))
 				brigades = querySnapshot.docs.map(doc => {
 					return { ...doc.data(), id: doc.id }
 				})
-				yield put(coursesActions.setCourses(brigades))
+				console.log('BRIGADES', brigades)
+				yield put(brigadesActions.setBrigades(brigades))
 			} catch (e) {
-				yield put(coursesActions.setError(e))
+				yield put(brigadesActions.setError(e))
 			}
-			yield put(coursesActions.setCoursesLoading(false))
+			yield put(brigadesActions.setBrigadesLoading(false))
 		}
 
 	} catch (e) {

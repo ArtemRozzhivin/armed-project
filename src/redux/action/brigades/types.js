@@ -1,0 +1,7 @@
+const types = {
+	SET_BRIGADES: 'SET_BRIGADES',
+	SET_BRIGADES_LOADING: 'SET_BRIGADES_LOADING',
+	SET_ERROR: 'SET_ERROR',
+}
+
+export default types

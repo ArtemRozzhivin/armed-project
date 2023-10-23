@@ -20,7 +20,6 @@ export default function* initialise() {
 				brigades = querySnapshot.docs.map(doc => {
 					return { ...doc.data(), id: doc.id }
 				})
-				console.log('BRIGADES', brigades)
 				yield put(brigadesActions.setBrigades(brigades))
 			} catch (e) {
 				yield put(brigadesActions.setError(e))

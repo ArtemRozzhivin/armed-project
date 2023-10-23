@@ -11,7 +11,6 @@ const brigadesReducer = (state = initialState, { type, payload }) => {
 	case types.SET_BRIGADES:
 		return { ...state, brigades: payload.brigades }
 
-
 	default:
 		return state
 	}

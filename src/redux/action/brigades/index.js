@@ -15,8 +15,13 @@ const setBrigadesLoading = (isLoading) => ({
 	payload: { isLoading },
 })
 
+const brigadeDeleted = () => ({
+	type: types.DELETE_BRIGADE,
+})
+
 export const brigadesActions = {
 	setBrigades,
 	setBrigadesLoading,
-	setError
+	setError,
+	brigadeDeleted
 }

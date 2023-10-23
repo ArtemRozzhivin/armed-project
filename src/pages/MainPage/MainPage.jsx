@@ -3,12 +3,24 @@ import Table from '../../ui/Table'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import routes from '../../routes'
+import { doc, deleteDoc } from 'firebase/firestore'
+import { db } from '../../firebaseConfig'
+
 
 const MainPage = ({ brigades }) => {
 
 
 	console.log(brigades)
+	const handleEditBrigade = () => {
+	}
 
+
+
+  
+	const handleDeleteBrigade = async (id) => {
+		await deleteDoc(doc(db, 'brigades', id))
+		console.log('delete')
+	}
 
 	return (
 		<div className='mx-auto px-4 sm:px-6 lg:px-8 py-8'>
@@ -34,7 +46,7 @@ const MainPage = ({ brigades }) => {
 			</div>
       
 			<div className='py-8'>
-				<Table hasDeleteMethod fieldsName={['title', 'creator', 'imgUrl', 'created', 'updated', 'cars']} results={brigades} spreadsheetTitles={['Назва', 'Ким створена', 'Зображення', 'Коли створено', 'Оновлено', 'Автомобілі', 'Змінити / Видалити']}>
+				<Table onEdit={() => handleEditBrigade} hasDeleteMethod onClickDeleteProject={(id) => handleDeleteBrigade(id)}  fieldsName={['title', 'creator', 'imgUrl', 'created', 'updated', 'cars']} results={brigades} spreadsheetTitles={['Назва', 'Ким створена', 'Зображення', 'Коли створено', 'Оновлено', 'Автомобілі', 'Змінити / Видалити']}>
 				</Table>
 			</div>
 		</div>

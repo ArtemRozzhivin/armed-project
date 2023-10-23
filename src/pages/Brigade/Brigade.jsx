@@ -6,14 +6,14 @@ import { auth } from '../../firebaseConfig'
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
 import {
-	isValidName, isValidPassword
+	isValidName
 } from '../../utils/validator'
 import { db, storage, ref  } from '../../firebaseConfig'
 import { collection, addDoc } from 'firebase/firestore' 
 import { uploadBytes, getDownloadURL } from 'firebase/storage'
 
 
-const NewBrigade = () => {
+const CreateBrigade = () => {
 	const [form, setForm] = useState({
 		title: '',
 		imgUrl: '',
@@ -31,10 +31,6 @@ const NewBrigade = () => {
 			allErrors.title = 'Неправильна назва'
 		}
 
-		if (!isValidPassword(form.imgUrl)) {
-			allErrors.imageUrl = 'Будь ласка оберіть файл картинки'
-		}
-
 		const valid = _isEmpty(_keys(allErrors))
 
 		setErrors(allErrors)
@@ -46,7 +42,7 @@ const NewBrigade = () => {
   }, [form]) // eslint-disable-line
 
 
-	const setBrigade = async (data) => {
+	const addBrigade = async (data) => {
 		const docRef = await addDoc(collection(db, 'brigades'), data)
 		console.log('Document written with ID: ', docRef.id)
 	}
@@ -62,7 +58,7 @@ const NewBrigade = () => {
 				cars: []
 			}
 
-			setBrigade(newForm)
+			addBrigade(newForm)
       
 			setIsLoading(false)
 		}
@@ -180,4 +176,4 @@ const NewBrigade = () => {
 	)
 }
 
-export default NewBrigade
+export default CreateBrigade

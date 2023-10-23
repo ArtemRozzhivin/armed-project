@@ -8,8 +8,9 @@ import Button from '../../ui/Button'
 import {
 	isValidName, isValidPassword
 } from '../../utils/validator'
-import { db } from '../../firebaseConfig'
+import { db, storage, ref  } from '../../firebaseConfig'
 import { collection, addDoc } from 'firebase/firestore' 
+import { uploadBytes, getDownloadURL } from 'firebase/storage'
 
 
 const NewBrigade = () => {
@@ -46,7 +47,6 @@ const NewBrigade = () => {
 
 
 	const setBrigade = async (data) => {
-		// Add a new document with a generated id.
 		const docRef = await addDoc(collection(db, 'brigades'), data)
 		console.log('Document written with ID: ', docRef.id)
 	}
@@ -54,8 +54,6 @@ const NewBrigade = () => {
 	const onSubmit = data => {
 		if (!isLoading) {
 			setIsLoading(true)
-
-			// console.log('data', auth.currentUser.email)
 
 			const newForm = {
 				...data,
@@ -65,37 +63,43 @@ const NewBrigade = () => {
 			}
 
 			setBrigade(newForm)
-
-
-
       
 			setIsLoading(false)
 		}
 	}
 
-	const handleInput = ({ target }) => {
-		console.log(target.name, target.value)
+	const uploadImageOnStorage = async (file) => {
+		const pathRef = ref(storage, 'images/' + file.name)
 
+		try {
+			await uploadBytes(pathRef, file)
+
+			const url = await getDownloadURL(pathRef)
+
+			return url
+		} catch (error) {
+			console.error('Error uploading and retrieving URL:', error)
+		}
+	}
+
+	const handleImage = async ({ target }) => {
 		if(target.type === 'file') {
 			const file = target?.files?.[0]
 			
 			if (!file) return
       
-			const reader = new FileReader()
-			reader.readAsDataURL(file)
+			const url = await uploadImageOnStorage(file)
+			console.log(url)
+
+			setForm(oldForm => ({
+				...oldForm,
+				[target.name]: url,
+			}))
 			
-			reader.onload = () => {
-				const result = reader.result
-
-				setForm(oldForm => ({
-					...oldForm,
-					[target.name]: result,
-				}))
-
-			}
 		}
+	}
 
-
+	const handleInput = ({ target }) => {
 		const value = target.type === 'checkbox' ? target.checked : target.value
 
 		setForm(oldForm => ({
@@ -132,18 +136,18 @@ const NewBrigade = () => {
 					error={beenSubmitted && errors.title}
 				/>
 				
-				<input
+				{/* <input
 					id='imgUrl'
 					name='imgUrl'
 					type='file'
-					label='Картинка'
+					label='Зображення'
 					// value={form.imgUrl}
 					className='mt-4'
-					onChange={handleInput}
+					onChange={handleImage}
 					// error={beenSubmitted && errors.imgUrl}
-				/>
+				/> */}
 
-				{/* <div className='mt-10 w-full lg:min-h-[300px] min-h-[150px] relative flex justify-center items-center'>
+				<div className='mt-10 w-full lg:min-h-[300px] min-h-[150px] relative flex justify-center items-center'>
 					<label className='absolute top-0 left-0 flex justify-center items-center text-center w-full h-full p-20 border-2 border-gray-400 border-dashed' htmlFor='image'>
 						{!form.imgUrl ? (
 							'Оберіть картинку'
@@ -158,12 +162,12 @@ const NewBrigade = () => {
 						label='Картинка'
 						// value=''
 						className='absolute w-full opacity-0 h-full cursor-pointer'
-						onChange={handleInput}
+						onChange={handleImage}
 						accept='image/*'
 						required
 						// error={beenSubmitted && errors.imgUrl}
 					/>
-				</div> */}
+				</div>
 
 
 				<div className='flex justify-between mt-10'>

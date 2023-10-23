@@ -34,7 +34,7 @@ const MainPage = ({ brigades }) => {
 			</div>
       
 			<div className='py-8'>
-				<Table hasDeleteMethod fieldsName={['name', 'creator', 'imgUrl', 'created', 'updated', 'cars']} results={brigades} spreadsheetTitles={['Назва', 'Ким створена', 'Картинка', 'Коли створено', 'Оновлено', 'Автомобілі', 'Змінити / Видалити']}>
+				<Table hasDeleteMethod fieldsName={['title', 'creator', 'imgUrl', 'created', 'updated', 'cars']} results={brigades} spreadsheetTitles={['Назва', 'Ким створена', 'Зображення', 'Коли створено', 'Оновлено', 'Автомобілі', 'Змінити / Видалити']}>
 				</Table>
 			</div>
 		</div>

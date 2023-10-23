@@ -9,6 +9,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	setBrigades: (data) => {
 		dispatch(brigadesActions.setBrigades(data))
+	},
+	getBrigades: () => {
+		dispatch(brigadesActions.getBrigades())
 	}
 })
 

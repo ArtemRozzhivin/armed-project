@@ -19,9 +19,14 @@ const brigadeDeleted = () => ({
 	type: types.DELETE_BRIGADE,
 })
 
+const getBrigades = () => ({
+	type: types.GET_BRIGADES,
+})
+
 export const brigadesActions = {
 	setBrigades,
 	setBrigadesLoading,
 	setError,
-	brigadeDeleted
+	brigadeDeleted,
+	getBrigades
 }

@@ -1,4 +1,4 @@
-import React, { } from 'react'
+import React, { useEffect } from 'react'
 import Table from '../../ui/Table'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -7,17 +7,20 @@ import { doc, deleteDoc } from 'firebase/firestore'
 import { db } from '../../firebaseConfig'
 
 
-const MainPage = ({ brigades }) => {
-
-
+const MainPage = ({ brigades, getBrigades }) => {
 	console.log(brigades)
+
+
 	const handleEditBrigade = () => {
 	}
 
-
+	useEffect(() => {
+		getBrigades()
+	}, [])
 
   
 	const handleDeleteBrigade = async (id) => {
+    
 		await deleteDoc(doc(db, 'brigades', id))
 		console.log('delete')
 	}
@@ -46,15 +49,17 @@ const MainPage = ({ brigades }) => {
 			</div>
       
 			<div className='py-8'>
-				<Table onEdit={() => handleEditBrigade} hasDeleteMethod onClickDeleteProject={(id) => handleDeleteBrigade(id)}  fieldsName={['title', 'creator', 'imgUrl', 'created', 'updated', 'cars']} results={brigades} spreadsheetTitles={['Назва', 'Ким створена', 'Зображення', 'Коли створено', 'Оновлено', 'Автомобілі', 'Змінити / Видалити']}>
-				</Table>
+				{brigades.length === 0 ? <div>Пусто</div> : 
+					<Table onEdit={() => handleEditBrigade} hasDeleteMethod onClickDeleteProject={(id) => handleDeleteBrigade(id)}  fieldsName={['title', 'creator', 'imgUrl', 'created', 'updated', 'cars']} results={brigades} spreadsheetTitles={['Назва', 'Ким створена', 'Зображення', 'Коли створено', 'Оновлено', 'Автомобілі', 'Змінити / Видалити']}>
+					</Table>}
 			</div>
 		</div>
 	)
 }
 
 MainPage.propTypes = {
-	brigades: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+	brigades: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+	getBrigades: PropTypes.func.isRequired
 }
 
 export default React.memo(MainPage)

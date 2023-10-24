@@ -14,12 +14,16 @@ const Table = ({
 	onEdit,
 	hasDeleteMethod,
 	onClickDeleteProject,
+	isImage
 }) => {
 	return (
 		<div>
 			<table className='min-w-full leading-normal'>
 				<thead>
 					<tr>
+						<th key={isImage} className='px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider'>
+							Зображення
+						</th>
 						{_map(spreadsheetTitles, (title) => (
 							<th key={title} className='px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider'>
 								{title}
@@ -30,53 +34,64 @@ const Table = ({
 				<tbody>
 					{_map(results, (param) => {
 						return (
-							<tr key={param.id || param.title}>
-								{_map(fieldsName, (fieldName, index) => {
-									let renderData
-									if (typeof param[fieldName] === 'boolean') {
-										renderData = param[fieldName] ? 'Y' : 'N'
-									} else if (_includes(checkDataRes, fieldName)) {
-										try {
-											renderData = param[fieldName]
-										} catch (e) {
+							<>
+								<tr key={param.id || param.title}>
+									{isImage && (
+										<td className='w-[150px] h-[150px] p-2'>
+											<img width={150} height={150} src={param.imgUrl} alt='Бригада'/>
+										</td>
+									)}
+									{_map(fieldsName, (fieldName, index) => {
+										let renderData
+										if (typeof param[fieldName] === 'boolean') {
+											renderData = param[fieldName] ? 'Y' : 'N'
+										} else if (_includes(checkDataRes, fieldName)) {
+											try {
+												renderData = param[fieldName]
+											} catch (e) {
+												renderData = param[fieldName]
+											}
+										} else {
 											renderData = param[fieldName]
 										}
-									} else {
-										renderData = param[fieldName]
-									}
-									return (
-										<td key={index} className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-											{Array.isArray(renderData) ? 
-												<Button primary large className='h-10' onClick={() => {
-													onEdit(param)
-												}}>
-													<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-														<path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-													</svg>
-												</Button> : 
-												<p className='text-gray-900 whitespace-no-wrap'>{typeof renderData === 'object' ? convertDate(renderData) : renderData}</p>
-											}
-											{/* <p className='text-gray-900 whitespace-no-wrap'>{renderData}</p> */}
-										</td>
-									)
-								})}
-								<td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center min-w-full'>
-									<Button primary large className='h-10' onClick={() => {
-										onEdit(param)
-									}}>
+										if (fieldName === 'created') {
+											renderData = new Date(param[fieldName]).toLocaleString()
+										}
+										return (
+											<td key={index} className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+												{Array.isArray(renderData) ? 
+													<div className='flex justify-center items-center'>
+														<Button primary large className='h-10' onClick={() => {
+															onEdit(param)
+														}}>
+															<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+																<path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+															</svg>
+														</Button> 
+													</div>  :
+													<p className='text-gray-900 whitespace-no-wrap'>{typeof renderData === 'object' ? convertDate(renderData) : renderData}</p>
+												}
+											</td>
+										)
+									})}
+									<td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center min-w-full'>
+										<Button primary large className='h-10' onClick={() => {
+											onEdit(param)
+										}}>
                       Edit
-									</Button>
+										</Button>
 
                   
-									{
-										hasDeleteMethod && (
-											<Button onClick={() => onClickDeleteProject(param.id)} danger large className='h-10 ml-4'>
+										{
+											hasDeleteMethod && (
+												<Button onClick={() => onClickDeleteProject(param.id)} danger large className='h-10 ml-4'>
                         Delete
-											</Button>
-										)
-									}
-								</td>
-							</tr>
+												</Button>
+											)
+										}
+									</td>
+								</tr>
+							</>
 						)
 					})}
 				</tbody>
@@ -92,6 +107,7 @@ Table.propTypes = {
 	hasDeleteMethod: PropTypes.bool,
 	onClickDeleteProject: PropTypes.func,
 	onEdit: PropTypes.func.isRequired,
+	isImage: PropTypes.bool
 }
 
 Table.defaultProps = {

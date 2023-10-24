@@ -63,7 +63,7 @@ const Modal = ({
 								<button
 									type='button'
 									className={cx('w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 text-base font-medium text-white sm:ml-3 sm:w-auto sm:text-sm', {
-										'bg-indigo-600 hover:bg-indigo-700': submitType === 'regular',
+										'bg-emerald-600 hover:bg-emerald-700': submitType === 'regular',
 										'bg-red-600 hover:bg-red-700': submitType === 'danger',
 									})}
 									onClick={onSubmit}

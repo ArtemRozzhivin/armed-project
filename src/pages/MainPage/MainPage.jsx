@@ -6,8 +6,7 @@ import routes from '../../routes'
 import { doc, deleteDoc } from 'firebase/firestore'
 import { db } from '../../firebaseConfig'
 
-
-const MainPage = ({ brigades, getBrigades }) => {
+const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFailed }) => {
 	console.log(brigades)
 
 
@@ -20,13 +19,21 @@ const MainPage = ({ brigades, getBrigades }) => {
 
   
 	const handleDeleteBrigade = async (id) => {
-    
-		await deleteDoc(doc(db, 'brigades', id))
-		console.log('delete')
+		if(confirm('Ви впевнені, що хочете видалити бригаду?')){
+			try {
+				await deleteDoc(doc(db, 'brigades', id))
+				const newBrigades = brigades.filter((brigade) => brigade.id !== id)
+				deleteSuccses()
+				setBrigades(newBrigades)
+			} catch (error) {
+				console.log(error)
+				deleteFailed()
+			}
+		}
 	}
 
 	return (
-		<div className='mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+		<div className='mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-[1400px]'>
 			<div className="flex justify-between mb-6">
 				<div className="flex items-end justify-between">
 					<h2 className="flex items-baseline mt-2 text-3xl font-bold text-gray-900">Панель управління
@@ -35,11 +42,6 @@ const MainPage = ({ brigades, getBrigades }) => {
 						</svg>
 					</h2>
 				</div>
-				<span onClick={() => {}} className="!pl-2 inline-flex justify-center items-center cursor-pointer text-center border border-transparent leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 shadow-sm text-white bg-slate-900 hover:bg-slate-700 dark:text-gray-50 dark:border-gray-800 dark:bg-slate-800 dark:hover:bg-slate-700 px-3 py-2 text-sm">
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true" className="w-5 h-5 mr-1"><path strokeLinecap="round" strokeLinejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"></path>
-					</svg>
-          Fetch
-				</span>
 
 				<Link to={routes.new_brigade} className="!pl-2 inline-flex justify-center items-center cursor-pointer text-center border border-transparent leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 shadow-sm text-white bg-slate-900 hover:bg-slate-700 dark:text-gray-50 dark:border-gray-800 dark:bg-slate-800 dark:hover:bg-slate-700 px-3 py-2 text-sm">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true" className="w-5 h-5 mr-1"><path strokeLinecap="round" strokeLinejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"></path>
@@ -48,9 +50,9 @@ const MainPage = ({ brigades, getBrigades }) => {
 				</Link>
 			</div>
       
-			<div className='py-8'>
+			<div className='py-8 mx-auto max-w-[1200px]'>
 				{brigades.length === 0 ? <div>Пусто</div> : 
-					<Table onEdit={() => handleEditBrigade} hasDeleteMethod onClickDeleteProject={(id) => handleDeleteBrigade(id)}  fieldsName={['title', 'creator', 'imgUrl', 'created', 'updated', 'cars']} results={brigades} spreadsheetTitles={['Назва', 'Ким створена', 'Зображення', 'Коли створено', 'Оновлено', 'Автомобілі', 'Змінити / Видалити']}>
+					<Table isImage onEdit={() => handleEditBrigade} hasDeleteMethod onClickDeleteProject={(id) => handleDeleteBrigade(id)}  fieldsName={['title', 'creator', 'created', 'cars']} results={brigades} spreadsheetTitles={['Назва', 'Ким створена', 'Коли створено', 'Автомобілі', 'Змінити / Видалити']}>
 					</Table>}
 			</div>
 		</div>
@@ -59,7 +61,10 @@ const MainPage = ({ brigades, getBrigades }) => {
 
 MainPage.propTypes = {
 	brigades: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-	getBrigades: PropTypes.func.isRequired
+	getBrigades: PropTypes.func.isRequired,
+	setBrigades: PropTypes.func.isRequired,
+	deleteSuccses: PropTypes.func.isRequired,
+	deleteFailed: PropTypes.func.isRequired,
 }
 
 export default React.memo(MainPage)

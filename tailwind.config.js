@@ -16,7 +16,14 @@ module.exports = {
 			colors: {
 				gray: {
 					750: '#141d2e',
-				}
+				},
+				emerald: {
+					500: '#78866b',
+					600: '#5e6d5b',
+					700: '#4f5f4b',
+					800: '#3f503b',
+					900: '#2f402b',
+				},
 			},
 			width: {
 				'card-toggle': 'calc(100% - 3rem)',

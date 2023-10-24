@@ -11,6 +11,7 @@ const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFai
 
 
 	const handleEditBrigade = () => {
+    
 	}
 
 	useEffect(() => {

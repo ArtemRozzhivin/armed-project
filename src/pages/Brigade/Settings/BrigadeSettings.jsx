@@ -9,11 +9,12 @@ import {
 	isValidName
 } from '../../../utils/validator'
 import { db, storage, ref  } from '../../../firebaseConfig'
-import { collection, addDoc } from 'firebase/firestore' 
+import { collection, addDoc, doc, getDoc } from 'firebase/firestore' 
 import { uploadBytes, getDownloadURL } from 'firebase/storage'
+import { useParams } from 'react-router-dom'
 
-
-const CreateBrigade = () => {
+const BrigadeSettings = () => {
+	const { id } = useParams()
 	const [form, setForm] = useState({
 		title: '',
 		imgUrl: '',
@@ -23,6 +24,24 @@ const CreateBrigade = () => {
 	const [errors, setErrors] = useState({})
 	const [beenSubmitted, setBeenSubmitted] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
+
+	const getBrigadeById = async () => {
+		try {
+			const docRef = doc(db, 'brigades', id)
+			const docBrigade = await getDoc(docRef)
+			const {title, imgUrl} = docBrigade.data()
+			setForm({title, imgUrl})
+		} catch (error) {
+			console.log(error)
+		}
+		
+	}
+
+	if(id) {
+		useEffect(() => {
+			getBrigadeById()
+		}, [])
+	}
 
 	const validate = () => {
 		const allErrors = {}
@@ -118,7 +137,7 @@ const CreateBrigade = () => {
 		<div className='min-h-page bg-gray-50 flex flex-col py-6 px-4 sm:px-6 lg:px-8'>
 			<form className='max-w-[800px] w-full mx-auto' onSubmit={handleSubmit}>
 				<h2 className='mt-2 text-3xl font-bold text-gray-900 '>
-						Створити нову бригаду
+					{id ? <span>Оновити дані бригади</span> : <span>Створити нову бригаду</span>}
 				</h2>
 				<Input
 					name='title'
@@ -168,7 +187,7 @@ const CreateBrigade = () => {
 
 				<div className='flex justify-between mt-10'>
 					<Button type='submit' primary large>
-							Створити
+						{id ? <span>Змінити</span> : <span>Створити</span>}
 					</Button>
 				</div>
 			</form>
@@ -176,4 +195,4 @@ const CreateBrigade = () => {
 	)
 }
 
-export default CreateBrigade
+export default BrigadeSettings

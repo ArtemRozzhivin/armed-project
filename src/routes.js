@@ -6,7 +6,7 @@ const routes = Object.freeze({
 	user_settings: '/settings',
 	users: '/users',
 	new_brigade: '/brigade/new',
-	edit_brigade: '/brigades/:id'
+	edit_brigade: '/brigade/:id'
 })
 
 export default routes

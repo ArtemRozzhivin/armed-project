@@ -4,7 +4,10 @@ import _includes from 'lodash/includes'
 import PropTypes from 'prop-types'
 import Button from './Button'
 import { convertDate } from '../utils/convertDate'
-// import notFound from '/assets/notFound.png'
+import { Link } from 'react-router-dom'
+import routes from '../routes'
+import _replace from 'lodash/replace'
+
 
 const checkDataRes = ['createdAt', 'updatedAt', 'updated', 'created', 'expiration_date']
 
@@ -76,11 +79,13 @@ const Table = ({
 										)
 									})}
 									<td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center min-w-full'>
-										<Button primary large className='h-10' onClick={() => {
-											onEdit(param)
-										}}>
-                      Edit
-										</Button>
+										<Link to={_replace(routes.edit_brigade, ':id', param.id)}>
+											<Button primary large className='h-10' onClick={() => {
+												onEdit(param)
+											}}>
+																Edit
+											</Button> 
+										</Link>
 
                   
 										{

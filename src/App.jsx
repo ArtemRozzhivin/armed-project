@@ -118,6 +118,7 @@ const App = () => {
 					<Route path={routes.singup} element={<Singup />} />
 					<Route path={routes.users} element={<Users />} />            
 					<Route path={routes.new_brigade} element={<BrigadeSettings />} />
+					<Route path={routes.edit_brigade} element={<BrigadeSettings />} />
 					<Route
 						path="*"
 						element={<Navigate to="/" replace />}

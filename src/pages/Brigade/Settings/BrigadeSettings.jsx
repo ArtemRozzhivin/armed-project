@@ -212,7 +212,6 @@ const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFai
 						className='absolute w-full opacity-0 h-full cursor-pointer'
 						onChange={handleImage}
 						accept='image/*'
-						required
 						// error={beenSubmitted && errors.imgUrl}
 					/>
 				</div>

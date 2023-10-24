@@ -53,7 +53,7 @@ const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFai
       
 			<div className='py-8 mx-auto max-w-[1200px]'>
 				{brigades.length === 0 ? <div>Пусто</div> : 
-					<Table isImage onEdit={() => handleEditBrigade} hasDeleteMethod onClickDeleteProject={(id) => handleDeleteBrigade(id)}  fieldsName={['title', 'creator', 'created', 'cars']} results={brigades} spreadsheetTitles={['Назва', 'Ким створена', 'Коли створено', 'Автомобілі', 'Змінити / Видалити']}>
+					<Table isImage onEdit={() => handleEditBrigade} hasDeleteMethod onClickDeleteProject={(id) => handleDeleteBrigade(id)}  fieldsName={['title', 'creator', 'created', 'cars']} results={brigades} spreadsheetTitles={['Назва', 'Ким створена', 'Коли створено', 'Автомобілі', 'Видалити']}>
 					</Table>}
 			</div>
 		</div>

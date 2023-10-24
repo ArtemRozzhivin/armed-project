@@ -3,7 +3,6 @@ import _map from 'lodash/map'
 import _includes from 'lodash/includes'
 import PropTypes from 'prop-types'
 import Button from './Button'
-import { convertDate } from '../utils/convertDate'
 import { Link } from 'react-router-dom'
 import routes from '../routes'
 import _replace from 'lodash/replace'
@@ -25,9 +24,10 @@ const Table = ({
 			<table className='min-w-full leading-normal'>
 				<thead>
 					<tr>
-						<th key={isImage} className='px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider'>
+						{isImage && (
+							<th key={isImage} className='px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider'>
 							Зображення
-						</th>
+							</th>)}
 						{_map(spreadsheetTitles, (title) => (
 							<th key={title} className='px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider'>
 								{title}
@@ -65,15 +65,15 @@ const Table = ({
 											<td key={index} className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
 												{Array.isArray(renderData) ? 
 													<div className='flex justify-center items-center'>
-														<Button primary large className='h-10' onClick={() => {
-															onEdit(param)
-														}}>
-															<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-																<path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-															</svg>
-														</Button> 
+														<Link to={_replace(routes.brigade_cars, ':id', param.id)}>
+															<Button primary large className='h-10'>
+																<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+																	<path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+																</svg>
+															</Button> 
+														</Link>
 													</div>  :
-													<p className='text-gray-900 whitespace-no-wrap'>{typeof renderData === 'object' ? convertDate(renderData) : renderData}</p>
+													<p className='text-gray-900 whitespace-no-wrap'>{renderData}</p>
 												}
 											</td>
 										)
@@ -83,7 +83,7 @@ const Table = ({
 											<Button primary large className='h-10' onClick={() => {
 												onEdit(param)
 											}}>
-																Edit
+											Edit
 											</Button> 
 										</Link>
 
@@ -112,7 +112,7 @@ Table.propTypes = {
 	fieldsName: PropTypes.arrayOf(PropTypes.string).isRequired,
 	hasDeleteMethod: PropTypes.bool,
 	onClickDeleteProject: PropTypes.func,
-	onEdit: PropTypes.func.isRequired,
+	onEdit: PropTypes.func,
 	isImage: PropTypes.bool
 }
 

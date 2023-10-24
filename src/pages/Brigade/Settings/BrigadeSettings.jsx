@@ -12,8 +12,9 @@ import { db, storage, ref  } from '../../../firebaseConfig'
 import { collection, addDoc, doc, getDoc, updateDoc } from 'firebase/firestore' 
 import { uploadBytes, getDownloadURL } from 'firebase/storage'
 import { useParams } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-const BrigadeSettings = () => {
+const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFailed}) => {
 	const { id } = useParams()
 	const [form, setForm] = useState({
 		title: '',
@@ -34,7 +35,6 @@ const BrigadeSettings = () => {
 		} catch (error) {
 			console.log(error)
 		}
-		
 	}
 
 	if(id) {
@@ -46,7 +46,7 @@ const BrigadeSettings = () => {
 	const validate = () => {
 		const allErrors = {}
 
-		if (!isValidName(form.title)) {
+		if (!isValidName(form.title) && isLoading) {
 			allErrors.title = 'Неправильна назва'
 		}
 
@@ -64,8 +64,14 @@ const BrigadeSettings = () => {
 	const addBrigade = async (data) => {
 		try {
 			const docRef = await addDoc(collection(db, 'brigades'), data)
-			console.log('Document written with ID: ', docRef.id) 
+			console.log('Document written with ID: ', docRef.id)
+			createSuccses()
+			setForm({
+				title: '',
+				imgUrl: '',
+			})
 		} catch (error) {
+			createFailed()
 			console.log(error)
 		}
 	}
@@ -75,12 +81,17 @@ const BrigadeSettings = () => {
 			const brigadeRef = doc(db, 'brigades', id)
 
 			// Set the "capital" field of the city 'DC'
-			const docRef = await updateDoc(brigadeRef, {
+			await updateDoc(brigadeRef, {
 				title: data.title,
 				imgUrl: data.imgUrl
 			})
-			console.log('Document updated with ID: ', docRef.id)
+			updateSuccses()
+			setForm({
+				title: '',
+				imgUrl: '',
+			})
 		} catch (error) {
+			updateFailed()
 			console.log(error)
 		}
 	}
@@ -100,8 +111,7 @@ const BrigadeSettings = () => {
 				}
 
 				addBrigade(newForm)
-			}
-      
+			}      
 			setIsLoading(false)
 		}
 	}
@@ -216,6 +226,13 @@ const BrigadeSettings = () => {
 			</form>
 		</div>
 	)
+}
+
+BrigadeSettings.propTypes = {
+	createSuccses: PropTypes.func.isRequired,
+	createFailed: PropTypes.func.isRequired,
+	updateSuccses: PropTypes.func.isRequired,
+	updateFailed: PropTypes.func.isRequired,
 }
 
 export default BrigadeSettings

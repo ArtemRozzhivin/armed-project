@@ -1,15 +1,22 @@
 import { connect } from 'react-redux'
-// import { brigadesActions } from '../../redux/action/brigades'
-import Brigade from './BrigadeSettings'
+import BrigadeSettings from './BrigadeSettings'
+import { AlertsAction } from '../../../redux/action/alerts'
+import { errorsAction } from '../../../redux/action/errors'
 
-// const mapStateToProps = (state) => ({
-// 	brigades: state.brigades.brigades
-// })
 
-// const mapDispatchToProps = (dispatch) => ({
-// 	setBrigades: (data) => {
-// 		dispatch(brigadesActions.setBrigades(data))
-// 	}
-// })
+const mapDispatchToProps = (dispatch) => ({
+	createSuccses: () => {
+		dispatch(AlertsAction.generateAlerts('Бригаду успішно створено', 'success'))
+	},
+	createFailed: () => {
+		dispatch(errorsAction.genericError('Не вдалося створити бригаду'))
+	},
+	updateSuccses: () => {
+		dispatch(AlertsAction.generateAlerts('Бригаду успішно оновлено', 'success'))
+	},
+	updateFailed: () => {
+		dispatch(errorsAction.genericError('Не вдалося оновити дані бригади'))
+	}
+})
 
-export default connect(null, null)(Brigade)
+export default connect(null, mapDispatchToProps)(BrigadeSettings)

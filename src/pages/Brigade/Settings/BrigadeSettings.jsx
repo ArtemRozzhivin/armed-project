@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import _keys from 'lodash/keys'
 import _isEmpty from 'lodash/isEmpty'
 // import { auth } from '../../hoc/protected'
-import { auth } from '../../firebaseConfig'
-import Input from '../../ui/Input'
-import Button from '../../ui/Button'
+import { auth } from '../../../firebaseConfig'
+import Input from '../../../ui/Input'
+import Button from '../../../ui/Button'
 import {
 	isValidName
-} from '../../utils/validator'
-import { db, storage, ref  } from '../../firebaseConfig'
+} from '../../../utils/validator'
+import { db, storage, ref  } from '../../../firebaseConfig'
 import { collection, addDoc } from 'firebase/firestore' 
 import { uploadBytes, getDownloadURL } from 'firebase/storage'
 

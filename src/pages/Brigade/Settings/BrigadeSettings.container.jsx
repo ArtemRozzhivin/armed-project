@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 // import { brigadesActions } from '../../redux/action/brigades'
-import Brigade from './Brigade'
+import Brigade from './BrigadeSettings'
 
 // const mapStateToProps = (state) => ({
 // 	brigades: state.brigades.brigades

@@ -4,6 +4,7 @@ import _includes from 'lodash/includes'
 import PropTypes from 'prop-types'
 import Button from './Button'
 import { convertDate } from '../utils/convertDate'
+// import notFound from '/assets/notFound.png'
 
 const checkDataRes = ['createdAt', 'updatedAt', 'updated', 'created', 'expiration_date']
 
@@ -38,7 +39,7 @@ const Table = ({
 								<tr key={param.id || param.title}>
 									{isImage && (
 										<td className='w-[150px] h-[150px] p-2'>
-											<img width={150} height={150} src={param.imgUrl} alt='Бригада'/>
+											<img width={150} height={150} src={param.imgUrl ? param.imgUrl : '/assets/notFound.png'} alt='Бригада'/>
 										</td>
 									)}
 									{_map(fieldsName, (fieldName, index) => {

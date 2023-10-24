@@ -9,7 +9,7 @@ import {
 	isValidName
 } from '../../../utils/validator'
 import { db, storage, ref  } from '../../../firebaseConfig'
-import { collection, addDoc, doc, getDoc } from 'firebase/firestore' 
+import { collection, addDoc, doc, getDoc, updateDoc } from 'firebase/firestore' 
 import { uploadBytes, getDownloadURL } from 'firebase/storage'
 import { useParams } from 'react-router-dom'
 
@@ -62,22 +62,45 @@ const BrigadeSettings = () => {
 
 
 	const addBrigade = async (data) => {
-		const docRef = await addDoc(collection(db, 'brigades'), data)
-		console.log('Document written with ID: ', docRef.id)
+		try {
+			const docRef = await addDoc(collection(db, 'brigades'), data)
+			console.log('Document written with ID: ', docRef.id) 
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const updateBrigade = async (data) => {
+		try {
+			const brigadeRef = doc(db, 'brigades', id)
+
+			// Set the "capital" field of the city 'DC'
+			const docRef = await updateDoc(brigadeRef, {
+				title: data.title,
+				imgUrl: data.imgUrl
+			})
+			console.log('Document updated with ID: ', docRef.id)
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	const onSubmit = data => {
 		if (!isLoading) {
 			setIsLoading(true)
 
-			const newForm = {
-				...data,
-				creator: auth.currentUser.email,
-				created: new Date().toISOString(),
-				cars: []
-			}
+			if(id) {
+				updateBrigade(data)
+			} else {
+				const newForm = {
+					...data,
+					creator: auth.currentUser.email,
+					created: new Date().toISOString(),
+					cars: []
+				}
 
-			addBrigade(newForm)
+				addBrigade(newForm)
+			}
       
 			setIsLoading(false)
 		}

@@ -6,6 +6,7 @@ import routes from '../../../routes'
 // import { db } from '../../firebaseConfig'
 import Table from '../../../ui/Table'
 import { useParams } from 'react-router-dom'
+import _replace from 'lodash/replace'
 
 const Cars = ({ brigades }) => {
 	const { id } = useParams()
@@ -52,7 +53,7 @@ const Cars = ({ brigades }) => {
 					</h2>
 				</div>
 
-				<Link to={routes.new_brigade} className="!pl-2 inline-flex justify-center items-center cursor-pointer text-center border border-transparent leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 shadow-sm text-white bg-slate-900 hover:bg-slate-700 dark:text-gray-50 dark:border-gray-800 dark:bg-slate-800 dark:hover:bg-slate-700 px-3 py-2 text-sm">
+				<Link to={_replace(routes.new_car, ':id', brigade.id)} className="!pl-2 inline-flex justify-center items-center cursor-pointer text-center border border-transparent leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 shadow-sm text-white bg-slate-900 hover:bg-slate-700 dark:text-gray-50 dark:border-gray-800 dark:bg-slate-800 dark:hover:bg-slate-700 px-3 py-2 text-sm">
 					{/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true" className="w-5 h-5 mr-1"><path strokeLinecap="round" strokeLinejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"></path>
 					</svg> */}
           Додати автомобіль
@@ -61,7 +62,7 @@ const Cars = ({ brigades }) => {
       
 			<div className='py-8 mx-auto max-w-[1200px]'>
 				{brigade.cars.length === 0 ? <div>Пусто</div> : 
-					<Table hasDeleteMethod onClickDeleteProject={(id) => handleDeleteBrigade(id)}  fieldsName={['brand', 'model', 'year', 'mileage', 'engine']} results={brigade.cars} spreadsheetTitles={['Марка', 'Модель', 'Рік', 'Пробіг', 'Об\'єм мотору', 'Змінити / Видалити']}>
+					<Table hasDeleteMethod onClickDeleteProject={(id) => handleDeleteBrigade(id)}  fieldsName={['make', 'model', 'category', 'year', 'mileage']} results={brigade.cars} spreadsheetTitles={['Марка', 'Модель', 'Тип', 'Рік', 'Пробіг', 'Змінити / Видалити']}>
 					</Table>}
 			</div>
 		</div>

@@ -1,8 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+
+
+export default {
 	mode: 'jit',
 	important: true,
-	content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+	content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html', './node_modules/tw-elements/dist/js/**/*.js'],
 	theme: {
 		screens: {
 			'xs': '400px',
@@ -54,5 +56,6 @@ module.exports = {
 		extend: {},
 		scrollBehavior: ['motion-safe', 'motion-reduce', 'responsive'],
 	},
+	plugins: [require('tw-elements/dist/plugin.cjs')],
 }
 

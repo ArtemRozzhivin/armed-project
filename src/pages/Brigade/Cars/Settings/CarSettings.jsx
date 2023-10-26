@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 // import { auth } from '../../hoc/protected'
 import Button from '../../../../ui/Button'
 import { db } from '../../../../firebaseConfig'
-import { doc, getDoc, updateDoc} from 'firebase/firestore' 
+import { doc, getDoc, updateDoc, addDoc, collection } from 'firebase/firestore' 
 import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Select from '../../../../ui/Search'
@@ -310,7 +310,7 @@ const CarsEngineArray = [
 ]
 
 
-const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed, getBrigades}) => {
+const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed, getBrigades, userEmail }) => {
 	const { id, carId } = useParams()
 	const navigate = useNavigate()
 	const [brigade, setBrigade] = useState({
@@ -369,6 +369,14 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 			await updateDoc(docRef, {
 				cars: [...brigade.cars, newData]
 			})
+
+			const docRefActions = collection(db, 'actionss')
+			await addDoc(docRefActions, {
+				date: new Date().toLocaleDateString(),
+				action: 'Створення автомобіля ' + data.make + ' ' + data.model + ' для бригади ' + brigade.title,
+				user: userEmail
+			})
+
 			createSuccses()
       
 			setForm({
@@ -408,7 +416,13 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 				cars: [...newCars]
 			})
 			updateSuccses()
-      
+			
+			const docRefActions = collection(db, 'actionss')
+			await addDoc(docRefActions, {
+				date: new Date().toLocaleDateString(),
+				action: 'Оновлення автомобіля ' + data.make + ' ' + data.model + ' з бригади ' + brigade.title,
+				user: userEmail
+			})
 			setForm({
 				id: '',
 				make: '',
@@ -534,6 +548,7 @@ CarsSettings.propTypes = {
 	updateSuccses: PropTypes.func.isRequired,
 	updateFailed: PropTypes.func.isRequired,
 	getBrigades: PropTypes.func.isRequired,
+	userEmail: PropTypes.string.isRequired,
 }
 
 

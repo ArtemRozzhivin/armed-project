@@ -3,6 +3,9 @@ import BrigadeSettings from './BrigadeSettings'
 import { AlertsAction } from '../../../redux/action/alerts'
 import { errorsAction } from '../../../redux/action/errors'
 
+const mapStateToProps = (state) => ({
+	userEmail: state.auth.user.email
+})
 
 const mapDispatchToProps = (dispatch) => ({
 	createSuccses: () => {
@@ -19,4 +22,4 @@ const mapDispatchToProps = (dispatch) => ({
 	}
 })
 
-export default connect(null, mapDispatchToProps)(BrigadeSettings)
+export default connect(mapStateToProps, mapDispatchToProps)(BrigadeSettings)

@@ -15,7 +15,7 @@ import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFailed}) => {
+const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFailed, userEmail }) => {
 	const { id } = useParams()
 	const [form, setForm] = useState({
 		title: '',
@@ -65,6 +65,12 @@ const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFai
 	const addBrigade = async (data) => {
 		try {
 			await addDoc(collection(db, 'brigades'), data)
+			const docRefActions = collection(db, 'actionss')
+			await addDoc(docRefActions, {
+				date: new Date().toLocaleDateString(),
+				action: 'Створення бригади ' + data.title,
+				user: userEmail
+			})
 			createSuccses()
 			setForm({
 				title: '',
@@ -84,6 +90,12 @@ const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFai
 			await updateDoc(brigadeRef, {
 				title: data.title,
 				imgUrl: data.imgUrl
+			})
+			const docRefActions = collection(db, 'actionss')
+			await addDoc(docRefActions, {
+				date: new Date().toLocaleDateString(),
+				action: 'Оновлення бригади ' + data.title,
+				user: userEmail
 			})
 			updateSuccses()
 			setForm({
@@ -239,6 +251,7 @@ BrigadeSettings.propTypes = {
 	createFailed: PropTypes.func.isRequired,
 	updateSuccses: PropTypes.func.isRequired,
 	updateFailed: PropTypes.func.isRequired,
+	userEmail: PropTypes.string.isRequired,
 }
 
 export default BrigadeSettings

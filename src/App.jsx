@@ -2,7 +2,8 @@ import React, { useEffect, useState, Suspense, lazy } from 'react'
 import {
 	Routes,
 	Route,
-	Navigate
+	Navigate,
+	useNavigate
 } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -59,7 +60,8 @@ const App = () => {
 	const dispatch = useDispatch()
 	const { error } = useSelector((state) => state.errors)
 	const { message, type } = useSelector((state) => state.alerts)
-	const { loading, authenticated } = useSelector(state => state.auth)
+	const { loading, authenticated, user } = useSelector(state => state.auth)
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		if (!authenticated) {
@@ -72,6 +74,22 @@ const App = () => {
 					dispatch(authActions.logout())
 				}
 				dispatch(authActions.finishLoading())
+			})
+		}
+	}, [authenticated])
+
+	useEffect(() => {
+		if (authenticated) {
+			getDocs(collection(db, 'access')).then((querySnapshot) => {
+				const access = querySnapshot.docs.map(doc => {
+					return { ...doc.data(), id: doc.id }
+				})
+
+				access.forEach((item) => {
+					if (item.email === user.email) {
+						navigate(routes.brigade_cars.replace(':id', item.brigadeId))
+					}
+				})
 			})
 		}
 	}, [authenticated])

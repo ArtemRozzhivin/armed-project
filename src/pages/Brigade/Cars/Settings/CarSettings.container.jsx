@@ -6,7 +6,8 @@ import { errorsAction } from '../../../../redux/action/errors'
 import { brigadesActions } from '../../../../redux/action/brigades'
 
 const mapStateToProps = (state) => ({
-	brigades: state.brigades.brigades
+	brigades: state.brigades.brigades,
+	userEmail: state.auth.user.email
 })
 
 const mapDispatchToProps = (dispatch) => ({

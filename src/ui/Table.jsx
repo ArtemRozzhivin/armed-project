@@ -78,7 +78,7 @@ const Table = ({
 											</td>
 										)
 									})}
-									<td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center min-w-full'>
+									<td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-left'>
 										<Link to={_replace(settignsLink.route, settignsLink.param, param.id)}>
 											<Button primary large className='h-10'>
 											Edit

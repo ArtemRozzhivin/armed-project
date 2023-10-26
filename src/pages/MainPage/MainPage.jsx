@@ -2,8 +2,10 @@ import React, { useEffect } from 'react'
 import Table from '../../ui/Table'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import _find from 'lodash/find'
+import { useSelector } from 'react-redux'
 import routes from '../../routes'
-import { doc, deleteDoc } from 'firebase/firestore'
+import { doc, deleteDoc, addDoc, collection } from 'firebase/firestore'
 import { db } from '../../firebaseConfig'
 
 const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFailed }) => {
@@ -11,12 +13,20 @@ const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFai
 		getBrigades()
 	}, [])
 
+	const { auth } = useSelector((state) => state)
+
   
 	const handleDeleteBrigade = async (id) => {
 		if(confirm('Ви впевнені, що хочете видалити бригаду?')){
 			try {
 				await deleteDoc(doc(db, 'brigades', id))
 				const newBrigades = brigades.filter((brigade) => brigade.id !== id)
+				const docRefActions = collection(db, 'actionss')
+				await addDoc(docRefActions, {
+					date: new Date().toLocaleDateString(),
+					action: 'Видалення бригади ' + _find(brigades, {id}).title,
+					user: auth.user.email
+				})
 				deleteSuccses()
 				setBrigades(newBrigades)
 			} catch (error) {

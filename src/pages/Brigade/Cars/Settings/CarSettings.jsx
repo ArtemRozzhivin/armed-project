@@ -12,7 +12,7 @@ import routes from '../../../../routes'
 import { Link, useNavigate } from 'react-router-dom'
 
 const CarsBrandArray = [
-	'Audi', 'BMW', 'Toyota', 'Mitsubishi'
+	'Audi', 'BMW', 'Toyota', 'Mitsubishi', 'Nissan', 'Honda', 'Kia'
 ]
 
 const CarsArray = [
@@ -180,6 +180,123 @@ const CarsArray = [
     
 		]
 	},
+	{make: 'Nissan', cars: [
+		{
+			year: 2017,
+			make: 'Nissan',
+			model: 'TITAN XD King Cab',
+			category: 'Pickup'
+		},
+		{
+			year: 2018,
+			make: 'Nissan',
+			model: 'NV3500 HD Passenger',
+			category: 'Van/Minivan'
+		},
+		{
+			year: 2018,
+			make: 'Nissan',
+			model: 'NV200',
+			category: 'Van/Minivan'
+		},
+		{
+			year: 2017,
+			make: 'Nissan',
+			model: 'TITAN XD Crew Cab',
+			category: 'Pickup'
+		},
+		{
+			year: 2017,
+			make: 'Nissan',
+			model: 'TITAN Single Cab',
+			category: 'Pickup'
+		},
+		{
+			year: 2016,
+			make: 'Nissan',
+			model: '370Z',
+			category: 'Coupe, Convertible'
+		},
+		{ year: 2019, make: 'Nissan', model: 'LEAF', category: 'Hatchback' },
+		{ year: 2019, make: 'Nissan', model: 'Sentra', category: 'Sedan' },
+		{ year: 2019, make: 'Nissan', model: 'Murano', category: 'SUV' },
+		{
+			year: 2019,
+			make: 'Nissan',
+			model: 'TITAN Single Cab',
+			category: 'Pickup'
+		},
+  
+	]},
+	{make: 'Honda', cars: [  
+		{
+			year: 2011,
+			make: 'Honda',
+			model: 'Accord Crosstour',
+			category: 'SUV'
+		},
+		{
+			year: 2011,
+			make: 'Honda',
+			model: 'Accord',
+			category: 'Sedan, Coupe'
+		},
+		{
+			year: 2011,
+			make: 'Honda',
+			model: 'Civic',
+			category: 'Sedan, Coupe'
+		},
+		{
+			year: 2014,
+			make: 'Honda',
+			model: 'Odyssey',
+			category: 'Van/Minivan'
+		},
+		{
+			year: 2014,
+			make: 'Honda',
+			model: 'Accord',
+			category: 'Sedan, Coupe'
+		},
+		{
+			year: 2019,
+			make: 'Honda',
+			model: 'Accord Hybrid',
+			category: 'Sedan'
+		},
+		{
+			year: 2019,
+			make: 'Honda',
+			model: 'Clarity Fuel Cell',
+			category: 'Sedan'
+		},
+	]},
+	{make: 'Kia', cars: [
+		{ year: 2012, make: 'Kia', model: 'Soul', category: 'Wagon' },
+		{
+			year: 2012,
+			make: 'Kia',
+			model: 'Rio',
+			category: 'Hatchback, Sedan'
+		},
+		{ year: 2015, make: 'Kia', model: 'Sorento', category: 'SUV' },
+		{ year: 2015, make: 'Kia', model: 'Cadenza', category: 'Sedan' },
+		{
+			year: 2015,
+			make: 'Kia',
+			model: 'Optima Hybrid',
+			category: 'Sedan'
+		},
+		{ year: 2017, make: 'Kia', model: 'Forte', category: 'Sedan' },
+		{ year: 2017, make: 'Kia', model: 'Forte5', category: 'Hatchback' },
+		{
+			year: 2020,
+			make: 'Kia',
+			model: 'Rio',
+			category: 'Sedan, Hatchback'
+		},  
+	]}
 ]
 
 const CarsEngineArray = [
@@ -209,9 +326,8 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 		category: '',
 		engine: '',
 	})
-	const [brandModels, setBrandModels] = useState([])
+	const [brandmodels, setBrandmodels] = useState([])
 	const [isLoading, setIsLoading] = useState(false)
-  
 	const getBrigadeById = async () => {
 		try {
 			const docRef = doc(db, 'brigades', id)
@@ -225,7 +341,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 				console.log(editingCar, 'editingCar')
 				if(editingCar) {
 					setForm(editingCar)
-					setBrandModels(CarsArray.filter((car) => car.make === editingCar.make)[0].cars)
+					setBrandmodels(CarsArray.filter((car) => car.make === editingCar.make)[0].cars)
 				}
 			}
         
@@ -336,7 +452,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 	}
 
 	const handleBrandSelect = (value) => {
-		setBrandModels(CarsArray.filter((car) => car.make === value)[0].cars)
+		setBrandmodels(CarsArray.filter((car) => car.make === value)[0].cars)
 
 		setForm(oldForm => ({
 			...oldForm,
@@ -345,7 +461,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 		}))
 	}
 
-	const handleModelSelect = (value) => {
+	const handlemodelSelect = (value) => {
 		setForm(oldForm => ({
 			...oldForm,
 			...value
@@ -383,7 +499,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 				{console.log(form)}
 
 				<div>
-					<Select disabled={!form.make} label="Модель" id="model" items={brandModels} title={form.model ? <span>{form.model}, {form.year}, {form.category}</span> : 'Модель'} onSelect={(value) => handleModelSelect(value)}/>
+					<Select disabled={!form.make} label="Модель" id="model" items={brandmodels} title={form.model ? <span>{form.model}, {form.year}, {form.category}</span> : 'Модель'} onSelect={(value) => handlemodelSelect(value)}/>
 				</div>
 
 				<div>
@@ -401,7 +517,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 				/>
 
 				<div className='flex justify-between mt-10'>
-					<Button type='submit' primary large>
+					<Button disabled={!form.make || !form.model || !form.engine} type='submit' primary large>
 						{carId ? <span>Змінити</span> : <span>Створити</span>}
 					</Button>
 				</div>

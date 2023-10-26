@@ -22,6 +22,12 @@ import { collection, getDocs } from 'firebase/firestore'
 const MainPage = lazy(() => import('./pages/MainPage'))
 const Signin = lazy(() => import('./pages/Auth/SignIn'))
 const Singup = lazy(() => import('./pages/Auth/Signup'))
+const Users = lazy(() => import('./pages/Users'))
+const BrigadeSettings = lazy(() => import('./pages/Brigade/Settings'))
+const Cars = lazy(() => import('./pages/Brigade/Cars'))
+const CarSettings = lazy(() => import('./pages/Brigade/Cars/Settings'))
+
+
 
 const Fallback = () => {
 	const [showLoader, setShowLoader] = useState(false)
@@ -112,6 +118,12 @@ const App = () => {
 					<Route index element={<MainPage />} />
 					<Route path={routes.singin} element={<Signin />} />
 					<Route path={routes.singup} element={<Singup />} />
+					<Route path={routes.users} element={<Users />} />            
+					<Route path={routes.new_brigade} element={<BrigadeSettings />} />
+					<Route path={routes.edit_brigade} element={<BrigadeSettings />} />
+					<Route path={routes.brigade_cars} element={<Cars />} />
+					<Route path={routes.new_car} element={<CarSettings />} />
+					<Route path={routes.edit_car} element={<CarSettings />} />
 					<Route
 						path="*"
 						element={<Navigate to="/" replace />}

@@ -18,30 +18,38 @@ const Header = ({ authenticated }) => {
 
 	return (
 		<><Popover className='relative bg-white'>
-			<header className='bg-indigo-600'>
+			<header className='bg-emerald-600'>
 				<nav className='mx-auto px-4 sm:px-6 lg:px-8' aria-label='Top'>
-					<div className='w-full py-4 flex items-center justify-between border-b border-indigo-500 lg:border-none'>
+					<div className='w-full py-4 flex items-center justify-between border-b border-emerald-500 lg:border-none'>
 						<div className='flex items-center'>
 							<Link to={routes.main} className='text-white color: rgb(255 255 255); text-3xl '>
-								<span>courses</span>
+								<span>Armed</span>
 							</Link>
 						</div>
+
+						<div>
+							<Link to={routes.main} className='text-base font-medium select-none text-white hover:text-emerald-50 py-2 px-3  hover:bg-emerald-500 rounded-md'>
+										Панель
+							</Link>
+							<Link to={routes.users} className='text-base font-medium select-none text-white hover:text-emerald-50 py-2 px-3  hover:bg-emerald-500 rounded-md'>
+										Користувачі
+							</Link>
+
+						</div>
+
 						<div className='hidden md:flex justify-center items-center flex-wrap ml-1 md:ml-10 space-y-1 sm:space-y-0 space-x-2 md:space-x-4'>
 							{authenticated ? (
 								<>
-									<Link to={routes.courses} className='inline-block select-none bg-white py-2 px-4 border border-transparent rounded-md text-base font-medium text-indigo-600 hover:bg-indigo-50'>
-										courses
-									</Link>
-									<Link to='#' className='text-base font-medium select-none text-white hover:text-indigo-50 py-2 px-3  hover:bg-indigo-500 rounded-md' onClick={logoutHandler}>
-										logout
+									<Link to='#' className='text-base font-medium select-none text-white hover:text-emerald-50 py-2 px-3  hover:bg-emerald-500 rounded-md' onClick={logoutHandler}>
+										Вийти
 									</Link>
 								</>
 							) : (
 								<>
-									<Link to={routes.singin} className='inline-block select-none bg-indigo-500  mt-1 sm:mt-0 py-2 px-3 md:px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75 '>
+									<Link to={routes.singin} className='inline-block select-none bg-emerald-500  mt-1 sm:mt-0 py-2 px-3 md:px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75 '>
 										sign in
 									</Link>
-									<Link to={routes.singup} className='inline-block select-none bg-indigo-500  mt-1 sm:mt-0 py-2 px-3 md:px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75'>
+									<Link to={routes.singup} className='inline-block select-none bg-emerald-500  mt-1 sm:mt-0 py-2 px-3 md:px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75'>
 										sing up
 									</Link>
 								</>
@@ -65,12 +73,12 @@ const Header = ({ authenticated }) => {
 							{authenticated ? (
 								<>
 									<div onClick={() => buttonRef.current?.click()}>
-										<Link to={routes.dashboard} className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700'>
+										<Link to={routes.dashboard} className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-emerald-600 hover:bg-emerald-700'>
 											courses
 										</Link>
 									</div>
 									<div onClick={() => buttonRef.current?.click()}>
-										<Link to='#' className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-indigo-600 bg-gray-50 hover:bg-indigo-50' onClick={logoutHandler}>
+										<Link to='#' className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-emerald-600 bg-gray-50 hover:bg-emerald-50' onClick={logoutHandler}>
 											logout
 										</Link>
 									</div>
@@ -78,12 +86,12 @@ const Header = ({ authenticated }) => {
 							) : (
 								<>
 									<div onClick={() => buttonRef.current?.click()}>
-										<Link to={routes.signin} className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-indigo-600 bg-gray-50 hover:bg-indigo-50'>
+										<Link to={routes.signin} className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-emerald-600 bg-gray-50 hover:bg-emerald-50'>
 											signin
 										</Link>
 									</div>
 									<div onClick={() => buttonRef.current?.click()}>
-										<Link to={routes.singup} className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-indigo-600 bg-gray-50 hover:bg-indigo-50'>
+										<Link to={routes.singup} className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-emerald-600 bg-gray-50 hover:bg-emerald-50'>
 											signup
 										</Link>
 									</div>

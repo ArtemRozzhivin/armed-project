@@ -10,6 +10,8 @@ import {
 	GoogleAuthProvider,
 	signInWithPopup,
 } from 'firebase/auth'
+import { getStorage, ref } from 'firebase/storage'
+
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -56,5 +58,7 @@ const firebaseApp = initializeApp(firebaseConfig)
 
 const auth = getAuth(firebaseApp)
 const db = getFirestore(firebaseApp)
+const storage = getStorage(firebaseApp)
 
-export { auth, db, firebaseApp }
+
+export { auth, db, firebaseApp, storage, ref }

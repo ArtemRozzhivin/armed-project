@@ -1,20 +1,3 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import routes from '../../routes'
+import MainPage from './MainPage.container'
 
-const MainPage = () => {
-	return (
-		<div className='mx-auto  text-center h-screen'>
-			<div className='pt-16 text-2xl text-gray-700'>
-				<p className=''>To access courses -
-					<Link to={routes.singin} className='px-2 underline underline-offset-2  hover:text-gray-900'>
-						sign in to your account.
-					</Link>
-				</p>
-				<p className='mt-10'>Many different courses</p>
-			</div>
-		</div>
-	)
-}
-
-export default React.memo(MainPage)
+export default MainPage

@@ -17,7 +17,7 @@ const Input = ({
 					'flex justify-between': label && hint,
 				})}
 			>
-				<label htmlFor={identifier} className='flex text-sm font-medium text-gray-700'>
+				<label htmlFor={identifier} className='flex text-sm font-medium text-emerald-500'>
 					{label}
 				</label>
 			</div>
@@ -29,7 +29,7 @@ const Input = ({
 					id={identifier}
 					onChange={onChange}
 					onKeyDown={onKeyDown}
-					className={cx('shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 w-full', {
+					className={cx('shadow-sm active:ring-emerald-500 focus:ring-emerald-500 focus:border-emerald-500 block sm:text-sm border font-semibold text-emerald-500 border-emerald-500 rounded-md p-2 w-full', {
 						'border-red-300 text-red-900 placeholder-red-300': isError,
 						'cursor-text': disabled,
 					})}

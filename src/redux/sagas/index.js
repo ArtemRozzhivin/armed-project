@@ -1,8 +1,8 @@
 import { fork } from 'redux-saga/effects'
 import watchAuth from './auth/watchers'
-// import watchCourses from './courses/watchers'
+import mainBrigadesSaga from './brigades/watchers'
 
 export default function* rootSaga() {
 	yield fork(watchAuth)
-	// yield fork(watchCourses)
+	yield fork(mainBrigadesSaga)
 }

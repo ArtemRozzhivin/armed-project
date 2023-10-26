@@ -1,8 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+
+
+export default {
 	mode: 'jit',
 	important: true,
-	content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+	content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html', './node_modules/tw-elements/dist/js/**/*.js'],
 	theme: {
 		screens: {
 			'xs': '400px',
@@ -16,7 +18,14 @@ module.exports = {
 			colors: {
 				gray: {
 					750: '#141d2e',
-				}
+				},
+				emerald: {
+					500: '#78866b',
+					600: '#5e6d5b',
+					700: '#4f5f4b',
+					800: '#3f503b',
+					900: '#2f402b',
+				},
 			},
 			width: {
 				'card-toggle': 'calc(100% - 3rem)',
@@ -47,5 +56,6 @@ module.exports = {
 		extend: {},
 		scrollBehavior: ['motion-safe', 'motion-reduce', 'responsive'],
 	},
+	plugins: [require('tw-elements/dist/plugin.cjs')],
 }
 

@@ -143,7 +143,7 @@ const Signup = ({ signup }) => {
 						<Button type='submit' loading={isLoading} primary large>
 							Sing Up
 						</Button>
-						<Link to={routes.singin} className='underline text-blue-600 hover:text-indigo-800'>
+						<Link to={routes.singin} className='underline text-blue-600 hover:text-emerald-800'>
 							Sign in
 						</Link>
 					</div>

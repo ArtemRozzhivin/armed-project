@@ -186,7 +186,7 @@ const CarsArray = [
 ]
 
 
-const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed}) => {
+const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed, getBrigades}) => {
 	const { id, carId } = useParams()
 	const [brigade, setBrigade] = useState({
 		title: '',
@@ -204,20 +204,17 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed}
 	const [isLoading, setIsLoading] = useState(false)
   
 	const getBrigadeById = async () => {
-		console.log(id, carId)
-
 		try {
 			const docRef = doc(db, 'brigades', id)
 			const docBrigade = await getDoc(docRef)
 			const {title, cars} = docBrigade.data()
 			setBrigade({title, cars})
 
-			console.log({title, cars})
 
 			if(carId) {
 				const editingCar = cars.find((car) => car.id === carId)
-				console.log(editingCar)
-				setForm(editingCar)
+				console.log(editingCar, 'editingCar')
+				if(editingCar) setForm(editingCar)
 			}
         
 		} catch (error) {
@@ -232,6 +229,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed}
 	}
 
 
+	console.log('FORM', form)
 
 	const createCarForBrigade = async (data) => {
 		console.log('CREATEDCAR', data)
@@ -239,6 +237,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed}
 			const docRef = doc(db, 'brigades', id)
 			const newData = {
 				...data,
+				mileage: data.mileage ? data.mileage : 0,
 				id: (new Date().getTime()).toString()
 			}
 			// Set the "capital" field of the city 'DC'
@@ -255,6 +254,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed}
 				year: '',
 				category: '',
 			})
+			getBrigades()
 		} catch (error) {
 			createFailed()
 			console.log(error)
@@ -269,7 +269,8 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed}
 				if(car.id === carId) {
 					return {
 						...car,
-						...data
+						...data,
+						mileage: data.mileage ? data.mileage : 0,
 					}
 				}
 
@@ -291,6 +292,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed}
 				year: '',
 				category: '',
 			})
+			getBrigades()
 		} catch (error) {
 			updateFailed()
 			console.log(error)
@@ -340,11 +342,10 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed}
 		}))
 	}
 
-	console.log(form)
-
 	return (
 		<div className='min-h-page bg-gray-50 flex flex-col py-6 px-4 sm:px-6 lg:px-8'>
 			<Link to={_replace(routes.brigade_cars, ':id', id)}>Назад</Link>
+      
 			<form className='max-w-[800px] w-full mx-auto flex flex-col gap-10' onSubmit={handleSubmit}>
 				<h2 className='mt-2 text-3xl font-bold text-gray-900 '>
 					<span>Додати автомобіль {brigade.title ? <span>для бригади {brigade.title}</span> : ''}</span>
@@ -380,6 +381,7 @@ CarsSettings.propTypes = {
 	createFailed: PropTypes.func.isRequired,
 	updateSuccses: PropTypes.func.isRequired,
 	updateFailed: PropTypes.func.isRequired,
+	getBrigades: PropTypes.func.isRequired,
 }
 
 

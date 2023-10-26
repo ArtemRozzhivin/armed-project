@@ -13,6 +13,7 @@ import { collection, addDoc, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { uploadBytes, getDownloadURL } from 'firebase/storage'
 import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFailed}) => {
 	const { id } = useParams()
@@ -218,6 +219,13 @@ const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFai
 
 
 				<div className='flex justify-between mt-10'>
+					<Link to={'/'}>
+						<Button primary large className='h-10'>
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+								<path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
+							</svg>
+						</Button> 
+					</Link>
 					<Button type='submit' primary large>
 						{id ? <span>Змінити</span> : <span>Створити</span>}
 					</Button>

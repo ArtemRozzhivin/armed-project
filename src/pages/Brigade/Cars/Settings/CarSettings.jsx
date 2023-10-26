@@ -484,9 +484,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 	}
 
 	return (
-		<div className='min-h-page bg-gray-50 flex flex-col py-6 px-4 sm:px-6 lg:px-8'>
-			<Link to={_replace(routes.brigade_cars, ':id', id)}>Назад</Link>
-      
+		<div className='min-h-page bg-gray-50 flex flex-col py-6 px-4 sm:px-6 lg:px-8'>      
 			<form className='max-w-[800px] w-full mx-auto flex flex-col gap-10' onSubmit={handleSubmit}>
 				<h2 className='mt-2 text-3xl font-bold text-gray-900 '>
 					<span>Додати автомобіль {brigade.title ? <span>для бригади {brigade.title}</span> : ''}</span>
@@ -517,6 +515,13 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 				/>
 
 				<div className='flex justify-between mt-10'>
+					<Link to={-1}>
+						<Button primary large className='h-10'>
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+								<path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
+							</svg>
+						</Button> 
+					</Link>
 					<Button disabled={!form.make || !form.model || !form.engine} type='submit' primary large>
 						{carId ? <span>Змінити</span> : <span>Створити</span>}
 					</Button>

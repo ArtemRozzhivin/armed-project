@@ -189,6 +189,7 @@ const CarsSettings = () => {
 		cars: [],
 	})
 	const [form, setForm] = useState({
+		id: '',
 		make: '',
 		model: '',
 		mileage: '',
@@ -221,13 +222,19 @@ const CarsSettings = () => {
 		try {
 			const docRef = doc(db, 'brigades', id)
 
+			const newData = {
+				...data,
+				id: new Date().getTime()
+			}
+
 			// Set the "capital" field of the city 'DC'
 			await updateDoc(docRef, {
-				cars: [...brigade.cars, data]
+				cars: [...brigade.cars, newData]
 			})
 
 			// createSuccses()
 			setForm({
+				id: '',
 				make: '',
 				model: '',
 				mileage: '',

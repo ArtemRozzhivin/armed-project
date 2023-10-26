@@ -36,6 +36,7 @@ const Table = ({
 					</tr>
 				</thead>
 				<tbody>
+					{console.log(results)}
 					{_map(results, (param) => {
 						return (
 							<>

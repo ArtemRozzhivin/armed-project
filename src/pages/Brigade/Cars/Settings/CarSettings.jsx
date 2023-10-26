@@ -4,9 +4,13 @@ import Button from '../../../../ui/Button'
 import { db } from '../../../../firebaseConfig'
 import { doc, getDoc, updateDoc} from 'firebase/firestore' 
 import { useParams } from 'react-router-dom'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import Select from '../../../../ui/Search'
 import Input from '../../../../ui/Input'
+import _replace from 'lodash/replace'
+import routes from '../../../../routes'
+import { Link } from 'react-router-dom'
+
 
 
 
@@ -182,8 +186,8 @@ const CarsArray = [
 ]
 
 
-const CarsSettings = () => {
-	const { id } = useParams()
+const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed}) => {
+	const { id, carId } = useParams()
 	const [brigade, setBrigade] = useState({
 		title: '',
 		cars: [],
@@ -200,11 +204,22 @@ const CarsSettings = () => {
 	const [isLoading, setIsLoading] = useState(false)
   
 	const getBrigadeById = async () => {
+		console.log(id, carId)
+
 		try {
 			const docRef = doc(db, 'brigades', id)
 			const docBrigade = await getDoc(docRef)
 			const {title, cars} = docBrigade.data()
 			setBrigade({title, cars})
+
+			console.log({title, cars})
+
+			if(carId) {
+				const editingCar = cars.find((car) => car.id === carId)
+				console.log(editingCar)
+				setForm(editingCar)
+			}
+        
 		} catch (error) {
 			console.log(error)
 		}
@@ -219,20 +234,19 @@ const CarsSettings = () => {
 
 
 	const createCarForBrigade = async (data) => {
+		console.log('CREATEDCAR', data)
 		try {
 			const docRef = doc(db, 'brigades', id)
-
 			const newData = {
 				...data,
-				id: new Date().getTime()
+				id: (new Date().getTime()).toString()
 			}
-
 			// Set the "capital" field of the city 'DC'
 			await updateDoc(docRef, {
 				cars: [...brigade.cars, newData]
 			})
-
-			// createSuccses()
+			createSuccses()
+      
 			setForm({
 				id: '',
 				make: '',
@@ -242,7 +256,43 @@ const CarsSettings = () => {
 				category: '',
 			})
 		} catch (error) {
-			// createFailed()
+			createFailed()
+			console.log(error)
+		}
+	}
+
+	const updateBrigadeCar = async (data) => {
+		try {
+			const docRef = doc(db, 'brigades', id)
+
+			const newCars = brigade.cars.map((car) => {
+				if(car.id === carId) {
+					return {
+						...car,
+						...data
+					}
+				}
+
+				return car
+			}) 
+
+
+			// Set the "capital" field of the city 'DC'
+			await updateDoc(docRef, {
+				cars: [...newCars]
+			})
+			updateSuccses()
+      
+			setForm({
+				id: '',
+				make: '',
+				model: '',
+				mileage: '',
+				year: '',
+				category: '',
+			})
+		} catch (error) {
+			updateFailed()
 			console.log(error)
 		}
 	}
@@ -251,7 +301,12 @@ const CarsSettings = () => {
 	const onSubmit = data => {
 		if (!isLoading) {
 			setIsLoading(true)
-			createCarForBrigade(data)
+
+			if(carId) {
+				updateBrigadeCar(data)
+			} else {
+				createCarForBrigade(data)
+			}
 			setIsLoading(false)
 		}
 	}
@@ -260,7 +315,6 @@ const CarsSettings = () => {
 	const handleSubmit = e => {
 		e.preventDefault()
 		e.stopPropagation()
-
 		onSubmit(form)
 	}
 
@@ -273,7 +327,6 @@ const CarsSettings = () => {
 	}
 
 	const handleModelSelect = (value) => {
-		console.log('VALUE', value)
 		setForm(oldForm => ({
 			...oldForm,
 			...value
@@ -291,6 +344,7 @@ const CarsSettings = () => {
 
 	return (
 		<div className='min-h-page bg-gray-50 flex flex-col py-6 px-4 sm:px-6 lg:px-8'>
+			<Link to={_replace(routes.brigade_cars, ':id', id)}>Назад</Link>
 			<form className='max-w-[800px] w-full mx-auto flex flex-col gap-10' onSubmit={handleSubmit}>
 				<h2 className='mt-2 text-3xl font-bold text-gray-900 '>
 					<span>Додати автомобіль {brigade.title ? <span>для бригади {brigade.title}</span> : ''}</span>
@@ -313,7 +367,7 @@ const CarsSettings = () => {
 
 				<div className='flex justify-between mt-10'>
 					<Button type='submit' primary large>
-						Додати
+						{carId ? <span>Змінити</span> : <span>Створити</span>}
 					</Button>
 				</div>
 			</form>
@@ -321,6 +375,12 @@ const CarsSettings = () => {
 	)
 }
 
+CarsSettings.propTypes = {
+	createSuccses: PropTypes.func.isRequired,
+	createFailed: PropTypes.func.isRequired,
+	updateSuccses: PropTypes.func.isRequired,
+	updateFailed: PropTypes.func.isRequired,
+}
 
 
 export default CarsSettings

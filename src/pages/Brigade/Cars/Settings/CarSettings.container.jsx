@@ -1,26 +1,32 @@
 import { connect } from 'react-redux'
-import { brigadesActions } from '../../redux/action/brigades'
+// import { brigadesActions } from '../../redux/action/brigades'
 import CarSettings from './CarSettings'
-import { AlertsAction } from '../../redux/action/alerts'
-import { errorsAction } from '../../redux/action/errors'
+import { AlertsAction } from '../../../../redux/action/alerts'
+import { errorsAction } from '../../../../redux/action/errors'
 
 const mapStateToProps = (state) => ({
 	brigades: state.brigades.brigades
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	setBrigades: (data) => {
-		dispatch(brigadesActions.setBrigades(data))
+	// setBrigades: (data) => {
+	// 	dispatch(brigadesActions.setBrigades(data))
+	// },
+	// getBrigades: () => {
+	// 	dispatch(brigadesActions.getBrigades())
+	// },
+	updateSuccses: () => {
+		dispatch(AlertsAction.generateAlerts('Автомобіль бригади успішно оновлено', 'success'))
 	},
-	getBrigades: () => {
-		dispatch(brigadesActions.getBrigades())
+	updateFailed: () => {
+		dispatch(errorsAction.genericError('Не вдалося оновити дані автомобіля'))
 	},
-	deleteSuccses: () => {
-		dispatch(AlertsAction.generateAlerts('Автомобіль успішно видалено', 'success'))
+	createSuccses: () => {
+		dispatch(AlertsAction.generateAlerts('Автомобіль успішно створено', 'success'))
 	},
-	deleteFailed : () => {
-		dispatch(errorsAction.genericError('Не вдалося видалити дані автомобіля'))
-	}
+	createFailed: () => {
+		dispatch(errorsAction.genericError('Не вдалося створити автомобіль'))
+	},
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CarSettings)

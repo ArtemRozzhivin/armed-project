@@ -1,3 +1,3 @@
-import CarsSettings from './CarsSettings'
+import CarSettings from './CarSettings.container'
 
-export default CarsSettings
+export default CarSettings

@@ -25,7 +25,7 @@ const Singup = lazy(() => import('./pages/Auth/Signup'))
 const Users = lazy(() => import('./pages/Users'))
 const BrigadeSettings = lazy(() => import('./pages/Brigade/Settings'))
 const Cars = lazy(() => import('./pages/Brigade/Cars'))
-const CarsSettings = lazy(() => import('./pages/Brigade/Cars/Settings'))
+const CarSettings = lazy(() => import('./pages/Brigade/Cars/Settings'))
 
 
 
@@ -122,8 +122,8 @@ const App = () => {
 					<Route path={routes.new_brigade} element={<BrigadeSettings />} />
 					<Route path={routes.edit_brigade} element={<BrigadeSettings />} />
 					<Route path={routes.brigade_cars} element={<Cars />} />
-					<Route path={routes.new_car} element={<CarsSettings />} />
-					<Route path={routes.edit_car} element={<CarsSettings />} />
+					<Route path={routes.new_car} element={<CarSettings />} />
+					<Route path={routes.edit_car} element={<CarSettings />} />
 					<Route
 						path="*"
 						element={<Navigate to="/" replace />}

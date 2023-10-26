@@ -8,15 +8,15 @@ import _map from 'lodash/map'
 
 const Select = ({
 	title, label, className, items, labelExtractor, keyExtractor, iconExtractor, onSelect, id,
-	buttonClassName, capitalise, labelClassName,
+	buttonClassName, capitalise, labelClassName, disabled
 }) => (
-	<Listbox id={id || ''} value={title} onChange={onSelect}>
+	<Listbox disabled={disabled} id={id || ''} value={title} onChange={onSelect} clas>
 		{({ open }) => (
 			<>
-				<Listbox.Label className='block text-sm whitespace-pre-line font-medium text-gray-70'>{label}</Listbox.Label>
+				<Listbox.Label className='block text-sm whitespace-pre-line font-medium text-gray-70 text-emerald-500 disabled:brightness-150'>{label}</Listbox.Label>
 				<div className={cx('mt-1 relative', className)}>
 					<Listbox.Button
-						className={cx('relative w-full bg-white border text-emerald-600 border-emerald-500 font-semibold rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm', buttonClassName)}
+						className={cx('relative w-full bg-white border text-emerald-600 border-emerald-500 font-semibold rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm disabled:brightness-150', buttonClassName)}
 					>
 						<span
 							className={cx('block truncate', {
@@ -107,6 +107,7 @@ Select.propTypes = {
 	iconExtractor: PropTypes.func,
 	keyExtractor: PropTypes.func,
 	label: PropTypes.string,
+	disabled: PropTypes.bool,
 }
 
 Select.defaultProps = {
@@ -120,6 +121,7 @@ Select.defaultProps = {
 	label: '',
 	items: [],
 	id: '',
+	disabled: false,
 }
 
 export default memo(Select)

@@ -9,10 +9,7 @@ import Select from '../../../../ui/Search'
 import Input from '../../../../ui/Input'
 import _replace from 'lodash/replace'
 import routes from '../../../../routes'
-import { Link } from 'react-router-dom'
-
-
-
+import { Link, useNavigate } from 'react-router-dom'
 
 const CarsBrandArray = [
 	'Audi', 'BMW', 'Toyota', 'Mitsubishi'
@@ -185,9 +182,20 @@ const CarsArray = [
 	},
 ]
 
+const CarsEngineArray = [
+	'V8 6.2L, бензиновий, 550 к.с.',
+	'TFSI 2.0L дизельний, 170 к.с.',
+	'Turbo 2.0L: бензин або дизель, 225 к.с.',
+	'Mirage 1.2L: бензиновий, 78 к.с.',
+	'TDI 2.0L: дизельний, 160 к.с.',
+	'EcoBoost 1.0L: бензиновий, 112 к.с.',
+	'Polo 1.0L TSI: бензиновий, 100 к.с.'
+]
+
 
 const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed, getBrigades}) => {
 	const { id, carId } = useParams()
+	const navigate = useNavigate()
 	const [brigade, setBrigade] = useState({
 		title: '',
 		cars: [],
@@ -199,6 +207,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 		mileage: '',
 		year: '',
 		category: '',
+		engine: '',
 	})
 	const [brandModels, setBrandModels] = useState([])
 	const [isLoading, setIsLoading] = useState(false)
@@ -214,7 +223,10 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 			if(carId) {
 				const editingCar = cars.find((car) => car.id === carId)
 				console.log(editingCar, 'editingCar')
-				if(editingCar) setForm(editingCar)
+				if(editingCar) {
+					setForm(editingCar)
+					setBrandModels(CarsArray.filter((car) => car.make === editingCar.make)[0].cars)
+				}
 			}
         
 		} catch (error) {
@@ -293,6 +305,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 				category: '',
 			})
 			getBrigades()
+			navigate(_replace(routes.brigade_cars, ':id', id))
 		} catch (error) {
 			updateFailed()
 			console.log(error)
@@ -306,6 +319,8 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 
 			if(carId) {
 				updateBrigadeCar(data)
+				// route user to brigade cars
+
 			} else {
 				createCarForBrigade(data)
 			}
@@ -322,9 +337,11 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 
 	const handleBrandSelect = (value) => {
 		setBrandModels(CarsArray.filter((car) => car.make === value)[0].cars)
+
 		setForm(oldForm => ({
 			...oldForm,
 			'make': value,
+			'model': carId ? '' : oldForm.model,
 		}))
 	}
 
@@ -332,6 +349,14 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 		setForm(oldForm => ({
 			...oldForm,
 			...value
+		}))
+	}
+
+
+	const handleEngineSelect = (value) => {
+		setForm(oldForm => ({
+			...oldForm,
+			'engine': value,
 		}))
 	}
 
@@ -351,9 +376,19 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 					<span>Додати автомобіль {brigade.title ? <span>для бригади {brigade.title}</span> : ''}</span>
 				</h2>
 
-				<Select id="brand" items={CarsBrandArray} title={form.make ? form.make : 'Марка'} onSelect={(value) => handleBrandSelect(value)}/>
+				<div>
+					<Select label="Марка" id="brand" items={CarsBrandArray} title={form.make ? form.make : 'Марка'} onSelect={(value) => handleBrandSelect(value)}/>
+				</div>
 
-				<Select id="model" items={brandModels} title={form.model ? <span>{form.model}, {form.year}, {form.category}</span> : 'Модель'} onSelect={(value) => handleModelSelect(value)}/>
+				{console.log(form)}
+
+				<div>
+					<Select disabled={!form.make} label="Модель" id="model" items={brandModels} title={form.model ? <span>{form.model}, {form.year}, {form.category}</span> : 'Модель'} onSelect={(value) => handleModelSelect(value)}/>
+				</div>
+
+				<div>
+					<Select disabled={!form.model} label="Двигун" id="engine" items={CarsEngineArray} title={form.engine ? form.engine : 'Двигун'} onSelect={(value) => handleEngineSelect(value)}/>
+				</div>
 
 				<Input
 					name='mileage'
@@ -363,7 +398,6 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 					value={form.mileage}
 					placeholder='12000'
 					onChange={handleInput}
-					// error={beenSubmitted && errors.title}
 				/>
 
 				<div className='flex justify-between mt-10'>

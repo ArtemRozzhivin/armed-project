@@ -46,7 +46,7 @@ const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFai
 			</div>
       
 			<div className='py-8 mx-auto max-w-[1200px]'>
-				{brigades.length === 0 ? <div>Пусто</div> : 
+				{brigades.length === 0 ? <div className='text-4xl font-semibold flex justify-center items-center text-emerald-700 mt-20'>Бригади відсутні</div> : 
 					<Table isImage settignsLink={{route: routes.edit_brigade, param: ':id'}} hasDeleteMethod onClickDeleteProject={(id) => handleDeleteBrigade(id)}  fieldsName={['title', 'creator', 'created', 'cars']} results={brigades} spreadsheetTitles={['Назва', 'Ким створена', 'Коли створено', 'Автомобілі', 'Видалити']}>
 					</Table>}
 			</div>

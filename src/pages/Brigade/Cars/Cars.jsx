@@ -49,8 +49,8 @@ const Cars = ({ brigades, deleteSuccses, deleteFailed }) => {
 				</Link>
 
 				<div className="flex items-end justify-between">
-					<h2 className="flex items-baseline mt-2 text-3xl font-bold text-gray-900">Автомобілі бригади {brigade && brigade.title}
-					</h2>
+					{brigade && brigade.cars.length === 0 ? <></> : <h2 className="flex items-baseline mt-2 text-3xl font-bold text-gray-900">Автомобілі бригади {brigade && brigade.title}
+					</h2>}
 				</div>
 
 				<Link to={brigade && _replace(routes.new_car, ':id', brigade.id)} className="!pl-2 inline-flex justify-center items-center cursor-pointer text-center border border-transparent leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 px-3 py-2 text-sm">
@@ -62,7 +62,7 @@ const Cars = ({ brigades, deleteSuccses, deleteFailed }) => {
 			</div>
       
 			<div className='py-8 mx-auto max-w-[1200px]'>
-				{brigade && (brigade.cars.length === 0 ? <div>Пусто</div> : 
+				{brigade && (brigade.cars.length === 0 ? <div className='text-4xl font-semibold flex justify-center items-center text-emerald-700 mt-20'>Автомобілі відсутні</div> : 
 					<Table settignsLink={{route: brigade && _replace(routes.edit_car, ':id', brigade.id), param: ':carId'}} hasDeleteMethod onClickDeleteProject={(id) => handleDeleteCar(id)}  fieldsName={['make', 'model', 'category', 'year', 'engine', 'mileage']} results={brigade.cars} spreadsheetTitles={['Марка', 'Модель', 'Тип', 'Рік', 'Двигун', 'Пробіг', 'Змінити / Видалити']}>
 					</Table>)}
 			</div>

@@ -9,6 +9,7 @@ const routes = Object.freeze({
 	edit_brigade: '/brigade/:id',
 	brigade_cars: '/brigade/:id/cars',
 	new_car: '/brigade/:id/cars/new',
+	edit_car: '/brigade/:id/cars/edit/:carId',
 })
 
 export default routes

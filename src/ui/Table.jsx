@@ -14,11 +14,12 @@ const Table = ({
 	results,
 	spreadsheetTitles,
 	fieldsName,
-	onEdit,
+	settignsLink,
 	hasDeleteMethod,
 	onClickDeleteProject,
 	isImage
 }) => {
+	console.log(settignsLink)
 	return (
 		<div>
 			<table className='min-w-full leading-normal'>
@@ -80,10 +81,8 @@ const Table = ({
 										)
 									})}
 									<td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center min-w-full'>
-										<Link to={_replace(routes.edit_brigade, ':id', param.id)}>
-											<Button primary large className='h-10' onClick={() => {
-												onEdit(param)
-											}}>
+										<Link to={_replace(settignsLink.route, settignsLink.param, param.id)}>
+											<Button primary large className='h-10'>
 											Edit
 											</Button> 
 										</Link>
@@ -113,7 +112,7 @@ Table.propTypes = {
 	fieldsName: PropTypes.arrayOf(PropTypes.string).isRequired,
 	hasDeleteMethod: PropTypes.bool,
 	onClickDeleteProject: PropTypes.func,
-	onEdit: PropTypes.func,
+	settignsLink: PropTypes.object.isRequired,
 	isImage: PropTypes.bool
 }
 

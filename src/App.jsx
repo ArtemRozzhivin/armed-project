@@ -123,6 +123,7 @@ const App = () => {
 					<Route path={routes.edit_brigade} element={<BrigadeSettings />} />
 					<Route path={routes.brigade_cars} element={<Cars />} />
 					<Route path={routes.new_car} element={<CarsSettings />} />
+					<Route path={routes.edit_car} element={<CarsSettings />} />
 					<Route
 						path="*"
 						element={<Navigate to="/" replace />}

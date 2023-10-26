@@ -60,7 +60,7 @@ const Cars = ({ brigades, deleteSuccses, deleteFailed }) => {
       
 			<div className='py-8 mx-auto max-w-[1200px]'>
 				{brigade && (brigade.cars.length === 0 ? <div>Пусто</div> : 
-					<Table hasDeleteMethod onClickDeleteProject={(id) => handleDeleteCar(id)}  fieldsName={['make', 'model', 'category', 'year', 'mileage']} results={brigade.cars} spreadsheetTitles={['Марка', 'Модель', 'Тип', 'Рік', 'Пробіг', 'Змінити / Видалити']}>
+					<Table settignsLink={{route: brigade && _replace(routes.edit_car, ':id', brigade.id), param: ':carId'}} hasDeleteMethod onClickDeleteProject={(id) => handleDeleteCar(id)}  fieldsName={['make', 'model', 'category', 'year', 'mileage']} results={brigade.cars} spreadsheetTitles={['Марка', 'Модель', 'Тип', 'Рік', 'Пробіг', 'Змінити / Видалити']}>
 					</Table>)}
 			</div>
 		</div>

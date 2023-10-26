@@ -64,8 +64,7 @@ const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFai
 
 	const addBrigade = async (data) => {
 		try {
-			const docRef = await addDoc(collection(db, 'brigades'), data)
-			console.log('Document written with ID: ', docRef.id)
+			await addDoc(collection(db, 'brigades'), data)
 			createSuccses()
 			setForm({
 				title: '',

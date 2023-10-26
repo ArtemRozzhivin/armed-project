@@ -19,7 +19,6 @@ const Table = ({
 	onClickDeleteProject,
 	isImage
 }) => {
-	console.log(settignsLink)
 	return (
 		<div>
 			<table className='min-w-full leading-normal'>
@@ -37,7 +36,6 @@ const Table = ({
 					</tr>
 				</thead>
 				<tbody>
-					{console.log(results)}
 					{_map(results, (param) => {
 						return (
 							<>

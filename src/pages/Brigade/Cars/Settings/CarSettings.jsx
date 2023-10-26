@@ -338,7 +338,6 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 
 			if(carId) {
 				const editingCar = cars.find((car) => car.id === carId)
-				console.log(editingCar, 'editingCar')
 				if(editingCar) {
 					setForm(editingCar)
 					setBrandmodels(CarsArray.filter((car) => car.make === editingCar.make)[0].cars)
@@ -357,10 +356,8 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 	}
 
 
-	console.log('FORM', form)
 
 	const createCarForBrigade = async (data) => {
-		console.log('CREATEDCAR', data)
 		try {
 			const docRef = doc(db, 'brigades', id)
 			const newData = {
@@ -487,7 +484,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 		<div className='min-h-page bg-gray-50 flex flex-col py-6 px-4 sm:px-6 lg:px-8'>      
 			<form className='max-w-[800px] w-full mx-auto flex flex-col gap-10' onSubmit={handleSubmit}>
 				<h2 className='mt-2 text-3xl font-bold text-gray-900 '>
-					<span>Додати автомобіль {brigade.title ? <span>для бригади {brigade.title}</span> : ''}</span>
+					{carId ? <span>Змінити дані автомобілю</span> : <span>Додати автомобіль {brigade.title ? <span>для бригади {brigade.title}</span> : ''}</span>}
 				</h2>
 
 				<div>

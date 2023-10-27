@@ -18,7 +18,7 @@ import Loader from './ui/Loader'
 import './App.css'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from './firebaseConfig'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, addDoc } from 'firebase/firestore'
 
 const MainPage = lazy(() => import('./pages/MainPage'))
 const Signin = lazy(() => import('./pages/Auth/SignIn'))
@@ -69,6 +69,12 @@ const App = () => {
 				if (user) {
 					getDocs(collection(db, 'users')).then(() => {
 						dispatch(authActions.loginSuccess({...user }))
+						const docRefActions = collection(db, 'actionss')
+						addDoc(docRefActions, {
+							date: new Date().toLocaleDateString(),
+							action: 'Вхід в систему ' + user.email,
+							user: user.email
+						})
 					})
 				} else {
 					dispatch(authActions.logout())
@@ -84,15 +90,15 @@ const App = () => {
 				const access = querySnapshot.docs.map(doc => {
 					return { ...doc.data(), id: doc.id }
 				})
-
 				access.forEach((item) => {
-					if (item.email === user.email) {
+					if (item.email.split('@')[0] === user.email.split('@')[0]) {
+						console.log(item.email, user.email)
 						navigate(routes.brigade_cars.replace(':id', item.brigadeId))
 					}
 				})
 			})
 		}
-	}, [authenticated])
+	}, [authenticated, navigate])
 
 	useEffect(() => {
 		const loaderEl = document.getElementById('loader')

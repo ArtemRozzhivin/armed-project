@@ -47,10 +47,10 @@ const Header = ({ authenticated }) => {
 							) : (
 								<>
 									<Link to={routes.singin} className='inline-block select-none bg-emerald-500  mt-1 sm:mt-0 py-2 px-3 md:px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75 '>
-										sign in
+										Увійти
 									</Link>
 									<Link to={routes.singup} className='inline-block select-none bg-emerald-500  mt-1 sm:mt-0 py-2 px-3 md:px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75'>
-										sing up
+										Зареєструватись
 									</Link>
 								</>
 							)}
@@ -74,12 +74,12 @@ const Header = ({ authenticated }) => {
 								<>
 									<div onClick={() => buttonRef.current?.click()}>
 										<Link to={routes.dashboard} className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-emerald-600 hover:bg-emerald-700'>
-											courses
+											Armed
 										</Link>
 									</div>
 									<div onClick={() => buttonRef.current?.click()}>
 										<Link to='#' className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-emerald-600 bg-gray-50 hover:bg-emerald-50' onClick={logoutHandler}>
-											logout
+											Вийти
 										</Link>
 									</div>
 								</>
@@ -87,12 +87,12 @@ const Header = ({ authenticated }) => {
 								<>
 									<div onClick={() => buttonRef.current?.click()}>
 										<Link to={routes.signin} className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-emerald-600 bg-gray-50 hover:bg-emerald-50'>
-											signin
+											Увійти
 										</Link>
 									</div>
 									<div onClick={() => buttonRef.current?.click()}>
 										<Link to={routes.singup} className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-emerald-600 bg-gray-50 hover:bg-emerald-50'>
-											signup
+											Зареєструватись
 										</Link>
 									</div>
 								</>

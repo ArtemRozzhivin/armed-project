@@ -93,7 +93,7 @@ const Signup = ({ signup }) => {
 			<div className='min-h-page bg-gray-50  flex flex-col py-6 px-4 sm:px-6 lg:px-8'>
 				<form className='max-w-7xl w-full mx-auto' onSubmit={handleSubmit}>
 					<h2 className='mt-2 text-3xl font-bold text-gray-900 '>
-						Sing Up
+						Зареєструватись
 					</h2>
 					<Input
 						name='email'
@@ -110,8 +110,8 @@ const Signup = ({ signup }) => {
 						name='password'
 						id='password'
 						type='password'
-						label='Password'
-						hint='Must be at least 8 characters'
+						label='Пароль'
+						hint='Повинно бути не менше 8 символів'
 						value={form.password}
 						placeholder='********'
 						className='mt-4'
@@ -122,7 +122,7 @@ const Signup = ({ signup }) => {
 						name='repeat'
 						id='repeat'
 						type='password'
-						label='Repeat Password'
+						label='Повторіть пароль'
 						value={form.repeat}
 						placeholder='********'
 						className='mt-4'
@@ -135,16 +135,16 @@ const Signup = ({ signup }) => {
 						name='tos'
 						id='tos'
 						className='mt-4'
-						label='I agree to the Terms of Service'
+						label='Я погоджуюся з Умовами надання послуг'
 						hintClassName='!text-red-600'
 						hint={beenSubmitted ? errors.tos : ''}
 					/>
 					<div className='pt-1 flex justify-between mt-3'>
 						<Button type='submit' loading={isLoading} primary large>
-							Sing Up
+							Зареєструватись
 						</Button>
-						<Link to={routes.singin} className='underline text-blue-600 hover:text-emerald-800'>
-							Sign in
+						<Link to={routes.singin} className='underline text-emerald-600 hover:text-emerald-800'>
+							Увійти
 						</Link>
 					</div>
 				</form>

@@ -19,18 +19,6 @@ html {
 }
 
 
-.CoursesText {
-  margin-top: 20px;
-  font-size: 23px;
-  padding-bottom: 20px;
-}
-
-.shadow-block-course {
-  box-shadow: 1px 1px 3px 3px hsl(243, 75%, 59%, 15%);
-  border-radius: 5px;
-}
-
-
 body {
   margin: 0;
 }

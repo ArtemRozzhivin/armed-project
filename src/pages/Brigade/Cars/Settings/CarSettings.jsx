@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-// import { auth } from '../../hoc/protected'
 import Button from '../../../../ui/Button'
 import { db } from '../../../../firebaseConfig'
 import { doc, getDoc, updateDoc, addDoc, collection } from 'firebase/firestore' 
@@ -365,7 +364,6 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 				mileage: data.mileage ? data.mileage : 0,
 				id: (new Date().getTime()).toString()
 			}
-			// Set the "capital" field of the city 'DC'
 			await updateDoc(docRef, {
 				cars: [...brigade.cars, newData]
 			})
@@ -411,7 +409,6 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 			}) 
 
 
-			// Set the "capital" field of the city 'DC'
 			await updateDoc(docRef, {
 				cars: [...newCars]
 			})
@@ -446,7 +443,6 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 
 			if(carId) {
 				updateBrigadeCar(data)
-				// route user to brigade cars
 
 			} else {
 				createCarForBrigade(data)

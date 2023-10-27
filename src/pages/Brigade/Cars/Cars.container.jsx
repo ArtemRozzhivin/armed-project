@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-// import { brigadesActions } from '../../redux/action/brigades'
 import Cars from './Cars'
 import { AlertsAction } from '../../../redux/action/alerts'
 import { errorsAction } from '../../../redux/action/errors'

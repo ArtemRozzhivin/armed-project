@@ -4,27 +4,14 @@ import { errorsAction } from '../../../action/errors'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { AlertsAction } from '../../../action/alerts'
 import { auth } from '../../../../firebaseConfig'
-// import { getDocs, collection } from 'firebase/firestore'
 import { setAccessToken } from '../../../../utils/accessToken'
 
 export default function* loginInWorker({ payload: { credentials, callback } }) {
 	try {
 		const result = yield call(signInWithEmailAndPassword, auth, credentials.email, credentials.password)
-		yield put(AlertsAction.authAlerts('Login successful', 'success'))
+		yield put(AlertsAction.authAlerts('Успішний вхід в систему', 'success'))
 		setAccessToken(result.user.accessToken)
 		yield put(authActions.loginSuccess(result.user))
-		// let courses
-		// yield put(coursesActions.setCoursesLoading(true))
-		try {
-			// const querySnapshot =  yield call(getDocs, collection(db, 'courses'))
-			// courses = querySnapshot.docs.map(doc => {
-			// 	return { ...doc.data(), id: doc.id }
-			// })
-			// // yield put(coursesActions.setCourses(courses))
-		} catch (e) {
-			// yield put(coursesActions.setError(e))
-		}
-		// yield put(coursesActions.setCoursesLoading(false))
 		callback(true, false)
 	} catch (error) {
 		yield put(errorsAction.loginFailed(error.message))

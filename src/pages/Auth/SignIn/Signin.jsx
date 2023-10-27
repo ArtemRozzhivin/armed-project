@@ -75,7 +75,7 @@ const Signin = ({ login }) => {
 		<div className='min-h-page bg-gray-50  flex flex-col py-6 px-4 sm:px-6 lg:px-8'>
 			<form className='max-w-7xl w-full mx-auto' onSubmit={handleSubmit}>
 				<h2 className='mt-2 text-3xl font-bold text-gray-900 '>
-						Log in to your account
+						Увійдіть до свого акаунту
 				</h2>
 				<Input
 					name='email'
@@ -92,8 +92,8 @@ const Signin = ({ login }) => {
 					name='password'
 					id='password'
 					type='password'
-					label='Password'
-					hint='Must be at least 8 characters'
+					label='Пароль'
+					hint='Повинно бути не менше 8 символів'
 					value={form.password}
 					placeholder='password'
 					className='mt-4'
@@ -102,7 +102,7 @@ const Signin = ({ login }) => {
 				/>
 				<div className='flex justify-between mt-3'>
 					<Button type='submit' primary large>
-							Log in
+							Увійти
 					</Button>
 				</div>
 			</form>

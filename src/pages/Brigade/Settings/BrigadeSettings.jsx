@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import _keys from 'lodash/keys'
 import _isEmpty from 'lodash/isEmpty'
-// import { auth } from '../../hoc/protected'
 import { auth } from '../../../firebaseConfig'
 import Input from '../../../ui/Input'
 import Button from '../../../ui/Button'
@@ -21,7 +20,6 @@ const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFai
 		title: '',
 		imgUrl: '',
 	})
-	//const isSettings = if route exist 'new'
 	const [validated, setValidated] = useState(false)
 	const [errors, setErrors] = useState({})
 	const [beenSubmitted, setBeenSubmitted] = useState(false)
@@ -196,17 +194,6 @@ const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFai
 					error={beenSubmitted && errors.title}
 				/>
 				
-				{/* <input
-					id='imgUrl'
-					name='imgUrl'
-					type='file'
-					label='Зображення'
-					// value={form.imgUrl}
-					className='mt-4'
-					onChange={handleImage}
-					// error={beenSubmitted && errors.imgUrl}
-				/> */}
-
 				<div className='mt-10 w-full lg:min-h-[300px] min-h-[150px] relative flex justify-center items-center'>
 					<label className='absolute top-0 left-0 flex justify-center items-center text-center w-full h-full p-20 border-2 border-gray-400 border-dashed' htmlFor='image'>
 						{!form.imgUrl ? (
@@ -220,11 +207,9 @@ const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFai
 						name='imgUrl'
 						type='file'
 						label='Картинка'
-						// value=''
 						className='absolute w-full opacity-0 h-full cursor-pointer'
 						onChange={handleImage}
 						accept='image/*'
-						// error={beenSubmitted && errors.imgUrl}
 					/>
 				</div>
 

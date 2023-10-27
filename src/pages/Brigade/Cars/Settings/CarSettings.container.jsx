@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-// import { brigadesActions } from '../../redux/action/brigades'
 import CarSettings from './CarSettings'
 import { AlertsAction } from '../../../../redux/action/alerts'
 import { errorsAction } from '../../../../redux/action/errors'
@@ -11,9 +10,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	// setBrigades: (data) => {
-	// 	dispatch(brigadesActions.setBrigades(data))
-	// },
 	getBrigades: () => {
 		dispatch(brigadesActions.getBrigades())
 	},

@@ -10,6 +10,7 @@ import _replace from 'lodash/replace'
 import Button from '../../../ui/Button'
 import Input from '../../../ui/Input'
 import Modal from '../../../ui/Modal'
+import { withAuthentication,  Auth } from '../../../hoc/protected'
 
 const Cars = ({ brigades, deleteSuccses, deleteFailed, userEmail }) => {
 	const { id } = useParams()
@@ -143,4 +144,4 @@ Cars.propTypes = {
 	userEmail: PropTypes.string.isRequired
 }
 
-export default React.memo(Cars)
+export default React.memo(withAuthentication(Cars, Auth.authenticated))

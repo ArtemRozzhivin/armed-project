@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../../firebaseConfig'
+import { withAuthentication, Auth } from '../../hoc/protected'
 
 const Users = () => {
 	const [actionss, setActions] = useState([])
@@ -74,4 +75,4 @@ const Users = () => {
 	)
 }
 
-export default React.memo(Users)
+export default React.memo(withAuthentication(Users, Auth.authenticated))

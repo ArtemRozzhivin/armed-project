@@ -2,7 +2,7 @@ import React, { useState, useEffect, memo } from 'react'
 import PropTypes from 'prop-types'
 import _keys from 'lodash/keys'
 import _isEmpty from 'lodash/isEmpty'
-import { withAuthentication, auth } from '../../../hoc/protected'
+import { withAuthentication, Auth } from '../../../hoc/protected'
 import Input from '../../../ui/Input'
 import Button from '../../../ui/Button'
 import {
@@ -114,4 +114,4 @@ Signin.propTypes = {
 	login: PropTypes.func.isRequired,
 }
 
-export default memo(withAuthentication(Signin, auth.notAuthenticated))
+export default memo(withAuthentication(Signin, Auth.notAuthenticated))

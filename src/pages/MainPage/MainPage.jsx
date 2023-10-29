@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import routes from '../../routes'
 import { doc, deleteDoc, addDoc, collection } from 'firebase/firestore'
 import { db } from '../../firebaseConfig'
+import { withAuthentication, Auth } from '../../hoc/protected'
 
 const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFailed }) => {
 	useEffect(() => {
@@ -69,4 +70,4 @@ MainPage.propTypes = {
 	deleteFailed: PropTypes.func.isRequired,
 }
 
-export default React.memo(MainPage)
+export default React.memo(withAuthentication(MainPage, Auth.authenticated))

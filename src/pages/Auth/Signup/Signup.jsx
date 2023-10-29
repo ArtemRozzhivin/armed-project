@@ -5,7 +5,7 @@ import _size from 'lodash/size'
 import _keys from 'lodash/keys'
 import _isEmpty from 'lodash/isEmpty'
 
-import { auth, withAuthentication } from '../../../hoc/protected'
+import { Auth, withAuthentication } from '../../../hoc/protected'
 import routes from '../../../routes'
 import Input from '../../../ui/Input'
 import Checkbox from '../../../ui/Checkbox'
@@ -157,4 +157,4 @@ Signup.propTypes = {
 	signup: PropTypes.func.isRequired,
 }
 
-export default memo(withAuthentication(Signup, auth.notAuthenticated))
+export default memo(withAuthentication(Signup, Auth.notAuthenticated))

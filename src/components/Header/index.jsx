@@ -15,6 +15,7 @@ const Header = ({ authenticated }) => {
 		await auth.signOut()
 		dispatch(authActions.logout())
 	}
+	console.log('auth', authenticated)
 
 	return (
 		<><Popover className='relative bg-white'>
@@ -27,15 +28,16 @@ const Header = ({ authenticated }) => {
 							</Link>
 						</div>
 
-						<div>
-							<Link to={routes.main} className='text-base font-medium select-none text-white hover:text-emerald-50 py-2 px-3  hover:bg-emerald-500 rounded-md'>
+						{authenticated && (
+							<div>
+								<Link to={routes.main} className='text-base font-medium select-none text-white hover:text-emerald-50 py-2 px-3  hover:bg-emerald-500 rounded-md'>
 										Панель
-							</Link>
-							<Link to={routes.users} className='text-base font-medium select-none text-white hover:text-emerald-50 py-2 px-3  hover:bg-emerald-500 rounded-md'>
+								</Link>
+								<Link to={routes.users} className='text-base font-medium select-none text-white hover:text-emerald-50 py-2 px-3  hover:bg-emerald-500 rounded-md'>
 										Користувачі
-							</Link>
+								</Link>
+							</div>)}
 
-						</div>
 
 						<div className='hidden md:flex justify-center items-center flex-wrap ml-1 md:ml-10 space-y-1 sm:space-y-0 space-x-2 md:space-x-4'>
 							{authenticated ? (

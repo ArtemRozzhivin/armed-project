@@ -13,6 +13,7 @@ import { uploadBytes, getDownloadURL } from 'firebase/storage'
 import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { withAuthentication, Auth } from '../../../hoc/protected'
 
 const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFailed, userEmail }) => {
 	const { id } = useParams()
@@ -239,4 +240,4 @@ BrigadeSettings.propTypes = {
 	userEmail: PropTypes.string.isRequired,
 }
 
-export default BrigadeSettings
+export default React.memo(withAuthentication(BrigadeSettings, Auth.authenticated))

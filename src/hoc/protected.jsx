@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import routes from '../routes'
 
-export const auth = {
+export const Auth = {
 	authenticated: {
 		selector: state => state.auth.authenticated,
 		redirectPath: routes.singin,

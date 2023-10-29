@@ -8,6 +8,7 @@ import Select from '../../../../ui/Search'
 import Input from '../../../../ui/Input'
 import _replace from 'lodash/replace'
 import routes from '../../../../routes'
+import { withAuthentication, Auth } from '../../../../hoc/protected'
 import { Link, useNavigate } from 'react-router-dom'
 
 const CarsBrandArray = [
@@ -548,4 +549,4 @@ CarsSettings.propTypes = {
 }
 
 
-export default CarsSettings
+export default React.memo(withAuthentication(CarsSettings, Auth.authenticated))

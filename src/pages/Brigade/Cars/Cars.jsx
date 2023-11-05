@@ -11,10 +11,27 @@ import Button from '../../../ui/Button'
 import Input from '../../../ui/Input'
 import Modal from '../../../ui/Modal'
 import { withAuthentication,  Auth } from '../../../hoc/protected'
+import { CSVLink } from 'react-csv'
+
+const tableHeaders = [
+	{label: 'Make', key: 'make'},
+	{label: 'Model', key: 'model'},
+	{label: 'Year', key: 'year'},
+	{label: 'Category', key: 'category'},
+	{label: 'Engine', key: 'engine'},
+	{label: 'Mileage', key: 'mileage'},
+]
 
 const Cars = ({ brigades, deleteSuccses, deleteFailed, userEmail }) => {
 	const { id } = useParams()
-	const [brigade, setBrigade] = useState(null)
+	const [brigade, setBrigade] = useState({
+		id: '',
+		title: '',
+		cars: [],
+		created: '',
+		creator: '',
+		imgUrl: ''
+	})
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [email, setUserEmail] = useState('')
 	const [isAccess, setAccess] = useState(true)
@@ -62,6 +79,19 @@ const Cars = ({ brigades, deleteSuccses, deleteFailed, userEmail }) => {
 		}
 	}
 
+	const handleDeleteTable = async () => {
+		if(window.confirm('Ви впевнені, що хочете видалити таблицю?')) {
+
+			const docRef = doc(db, 'brigades', id)
+
+			await updateDoc(docRef, {
+				cars: []
+			})
+    
+			setBrigade({ ...brigade, cars: [] })
+		}
+	}
+
 	return (
 		<div className='mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-[1400px]'>
 			<div className="flex justify-between mb-6">
@@ -73,10 +103,20 @@ const Cars = ({ brigades, deleteSuccses, deleteFailed, userEmail }) => {
 					</Button>
 				</Link>)}
 				<div className="flex items-end justify-between">
-					{brigade && brigade.cars.length === 0 ? <></> : <h2 className="flex items-baseline mt-2 text-3xl font-bold text-gray-900">Автомобілі бригади {brigade && brigade.title}
+					{brigade && brigade.cars.length === 0 ? <></> : <h2 className="flex items-baseline mt-2 text-3xl font-bold text-gray-900">Автомобілі бригади {brigade.title}
 					</h2>}
 				</div>
 				{isAccess && (<div className='flex items-center gap-3'>
+					<CSVLink  filename={`${brigade.title}_cars.csv`} target="_blank" headers={tableHeaders} data={brigade.cars} separator={';'} className='!pl-2 inline-flex justify-center items-center cursor-pointer text-center border border-transparent leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 px-3 py-2 text-sm'>
+						Завантажити таблицю
+					</CSVLink>
+          
+					<Button primary large className='h-10' onClick={handleDeleteTable}>
+						<CSVLink target="_blank" headers={tableHeaders} data={brigade ? brigade.cars : []} separator={';'} className='!pl-2 inline-flex justify-center items-center cursor-pointer text-center border border-transparent leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 px-3 py-2 text-sm'>
+						Видалити таблицю
+						</CSVLink>
+					</Button>
+          
 					<Button primary large className='h-10' onClick={() => setIsModalOpen(true)}>
 						Надати доступ
 					</Button>
@@ -91,9 +131,9 @@ const Cars = ({ brigades, deleteSuccses, deleteFailed, userEmail }) => {
 			</div>
 
 			<div className='py-8 mx-auto max-w-[1200px]'>
-				{brigade && (brigade.cars.length === 0 ? <div className='text-4xl font-semibold flex justify-center items-center text-emerald-700 mt-20'>Автомобілі відсутні</div> :
+				{(brigade.cars.length === 0 ? <div className='text-4xl font-semibold flex justify-center items-center text-emerald-700 mt-20'>Автомобілі відсутні</div> :
 					<Table
-						settignsLink={{ route: brigade && _replace(routes.edit_car, ':id', brigade.id), param: ':carId' }}
+						settignsLink={{ route: _replace(routes.edit_car, ':id', brigade.id), param: ':carId' }}
 						hasDeleteMethod onClickDeleteProject={(id) => handleDeleteCar(id)}
 						fieldsName={['make', 'model', 'category', 'year', 'engine', 'mileage']}
 						results={brigade.cars}

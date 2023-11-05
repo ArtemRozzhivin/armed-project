@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Table from '../../ui/Table'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -8,6 +8,16 @@ import routes from '../../routes'
 import { doc, deleteDoc, addDoc, collection } from 'firebase/firestore'
 import { db } from '../../firebaseConfig'
 import { withAuthentication, Auth } from '../../hoc/protected'
+import { CSVLink } from 'react-csv'
+
+const headers = [
+	{label: 'ID', key: 'id'},
+	{label: 'Title', key: 'title'},
+	{label: 'Creator', key: 'creator'},
+	{label: 'Created', key: 'created'},
+	{label: 'Cars', key: 'cars'},
+	{label: 'Image', key: 'imgUrl'}
+]
 
 const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFailed }) => {
 	useEffect(() => {
@@ -15,7 +25,7 @@ const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFai
 	}, [])
 
 	const { auth } = useSelector((state) => state)
-
+	const [brigadeTable, setBrigadeTable] = useState([])
   
 	const handleDeleteBrigade = async (id) => {
 		if(confirm('Ви впевнені, що хочете видалити бригаду?')){
@@ -37,6 +47,28 @@ const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFai
 		}
 	}
 
+	const handleDownloadTable = () => {
+		const newTable = brigades.map((brigade) => {
+			let carInfoString = ''
+
+			for (const car of brigade.cars) {
+				const { make, model } = car
+        
+				carInfoString += `${make} ${model}, `
+			}
+    
+			carInfoString = carInfoString.slice(0, -2)
+    
+			return {
+				...brigade,
+				cars: carInfoString
+			}
+		})
+
+		setBrigadeTable(newTable)
+	}
+
+
 	return (
 		<div className='mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-[1400px]'>
 			<div className="flex justify-between mb-6">
@@ -45,12 +77,17 @@ const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFai
 					</h2>
 				</div>
 
-				<Link to={routes.new_brigade} className="!pl-2 inline-flex justify-center items-center cursor-pointer text-center border border-transparent leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 px-3 py-2 text-sm">
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-						<path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
-					</svg>
+				<div className='flex justify-center items-center gap-5'>
+					<CSVLink  filename={'brigades.csv'} target="_blank" onClick={handleDownloadTable} headers={headers} data={brigadeTable} separator={';'} className='!pl-2 inline-flex justify-center items-center cursor-pointer text-center border border-transparent leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 px-3 py-2 text-sm'>
+          Завантажити таблицю
+					</CSVLink>
+					<Link to={routes.new_brigade} className="!pl-2 inline-flex justify-center items-center cursor-pointer text-center border border-transparent leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 px-3 py-2 text-sm">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+							<path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
+						</svg>
           Додати бригаду
-				</Link>
+					</Link>
+				</div>
 			</div>
       
 			<div className='py-8 mx-auto max-w-[1200px]'>

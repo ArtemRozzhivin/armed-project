@@ -15,7 +15,7 @@ const Button = ({
 			'text-emerald-700 bg-emerald-100 hover:bg-emerald-200 border-transparent': secondary,
 			'shadow-sm text-white bg-emerald-600 hover:bg-emerald-600 border-transparent brightness-150': disabled,
 			'text-gray-700 bg-white hover:bg-gray-50 border-transparent': white,
-			'text-white bg-red-500 hover:bg-red-600 border-transparent': danger,
+			'text-white bg-red-700 hover:bg-red-800 border-transparent': danger,
 			'text-red-500 hover:text-red-600 border-red-600 semiDanger': semiDanger,
 			'px-2.5 py-1.5 text-xs': small,
 			'px-2.5 py-1.5 text-sm': semiSmall,

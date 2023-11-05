@@ -9,6 +9,7 @@ import { doc, deleteDoc, addDoc, collection } from 'firebase/firestore'
 import { db } from '../../firebaseConfig'
 import { withAuthentication, Auth } from '../../hoc/protected'
 import { CSVLink } from 'react-csv'
+import Button from '../../ui/Button'
 
 const headers = [
 	{label: 'ID', key: 'id'},
@@ -78,9 +79,14 @@ const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFai
 				</div>
 
 				<div className='flex justify-center items-center gap-5'>
-					<CSVLink  filename={'brigades.csv'} target="_blank" onClick={handleDownloadTable} headers={headers} data={brigadeTable} separator={';'} className='!pl-2 inline-flex justify-center items-center cursor-pointer text-center border border-transparent leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 px-3 py-2 text-sm'>
+					<Button primary large className='flex items-center gap-1 h-10'>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+							<path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
+						</svg>
+						<CSVLink  filename={'brigades.csv'} target="_blank" onClick={handleDownloadTable} headers={headers} data={brigadeTable} separator={';'} >
           Завантажити таблицю
-					</CSVLink>
+						</CSVLink>
+					</Button>
 					<Link to={routes.new_brigade} className="!pl-2 inline-flex justify-center items-center cursor-pointer text-center border border-transparent leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 px-3 py-2 text-sm">
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
 							<path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
@@ -95,6 +101,38 @@ const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFai
 					<Table isImage settignsLink={{route: routes.edit_brigade, param: ':id'}} hasDeleteMethod onClickDeleteProject={(id) => handleDeleteBrigade(id)}  fieldsName={['title', 'creator', 'created', 'cars']} results={brigades} spreadsheetTitles={['Назва', 'Ким створена', 'Коли створено', 'Автомобілі', 'Видалити']}>
 					</Table>}
 			</div>
+
+			<Modal
+				isOpened={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+				message={(
+					<div>
+						<Input
+							name='title'
+							id='title'
+							type='text'
+							label='Почта користовача'
+							value={email}
+							placeholder='Введіть почту користовача'
+							className='mt-4'
+							onChange={(e) => {
+								setUserEmail(e.target.value)
+							}}
+						/>
+					</div>
+				)}
+				closeText={'Закрити'}
+				submitText={'Надати доступ'}
+				submitType={'danger'}
+				onSubmit={() => {
+					setIsModalOpen(false)
+					const docRef = collection(db, 'access')
+					addDoc(docRef, {
+						brigadeId: brigade.id,
+						email: email
+					})
+				}}
+			/>
 		</div>
 	)
 }

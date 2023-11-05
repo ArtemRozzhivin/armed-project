@@ -7,7 +7,7 @@ import _map from 'lodash/map'
 
 
 const Select = ({
-	title, label, className, items, labelExtractor, keyExtractor, iconExtractor, onSelect, id,
+	title, label, className, items, labelExtractor, iconExtractor, onSelect, id,
 	buttonClassName, capitalise, labelClassName, disabled
 }) => (
 	<Listbox disabled={disabled} id={id || ''} value={title} onChange={onSelect} clas>
@@ -43,7 +43,7 @@ const Select = ({
 						>
 							{_map(items, (item, index) => (
 								<Listbox.Option
-									key={keyExtractor ? keyExtractor(item, index) : item}
+									key={`${item}-${index}`}
 									className={({ active }) => cx('dark:text-white cursor-default select-none relative py-2 pl-8 pr-4', {
 										'text-white bg-emerald-600': active,
 										'text-gray-900': !active,

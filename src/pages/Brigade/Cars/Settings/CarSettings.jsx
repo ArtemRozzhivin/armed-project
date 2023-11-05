@@ -369,6 +369,8 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 				cars: [...brigade.cars, newData]
 			})
 
+			navigate(_replace(routes.brigade_cars, ':id', id))
+
 			const docRefActions = collection(db, 'actionss')
 			await addDoc(docRefActions, {
 				date: new Date().toLocaleDateString(),
@@ -394,6 +396,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 	}
 
 	const updateBrigadeCar = async (data) => {
+		console.log('UPDAAAATE')
 		try {
 			const docRef = doc(db, 'brigades', id)
 
@@ -441,7 +444,6 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 	const onSubmit = data => {
 		if (!isLoading) {
 			setIsLoading(true)
-
 			if(carId) {
 				updateBrigadeCar(data)
 
@@ -501,8 +503,6 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 				<div>
 					<Select label="Марка" id="brand" items={CarsBrandArray} title={form.make ? form.make : 'Марка'} onSelect={(value) => handleBrandSelect(value)}/>
 				</div>
-
-				{console.log(form)}
 
 				<div>
 					<Select disabled={!form.make} label="Модель" id="model" items={brandmodels} title={form.model ? <span>{form.model}, {form.year}, {form.category}</span> : 'Модель'} onSelect={(value) => handlemodelSelect(value)}/>

@@ -6,6 +6,7 @@ import Button from './Button'
 import { Link } from 'react-router-dom'
 import routes from '../routes'
 import _replace from 'lodash/replace'
+import arrowRight from './icons/arrowRight.svg'
 
 
 const checkDataRes = ['createdAt', 'updatedAt', 'updated', 'created', 'expiration_date']
@@ -17,11 +18,12 @@ const Table = ({
 	settignsLink,
 	hasDeleteMethod,
 	onClickDeleteProject,
-	isImage
-}) => {
+	isImage,
+	
+}, ref) => {
 	return (
 		<div>
-			<table className='min-w-full leading-normal'>
+			<table ref={ref} className='min-w-full leading-normal'>
 				<thead>
 					<tr>
 						{isImage && (
@@ -67,10 +69,11 @@ const Table = ({
 													<div className='flex justify-center items-center'>
 														<Link to={_replace(routes.brigade_cars, ':id', param.id)}>
 															<Button primary large className='h-10'>
-																<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+																{/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
 																	<path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-																</svg>
-															</Button> 
+																</svg> */}
+																<img width={25} height={25} src={arrowRight} alt='arrowRight'/>
+															</Button>
 														</Link>
 													</div>  :
 													<p className='text-gray-900 whitespace-no-wrap'>{renderData}</p>
@@ -111,7 +114,8 @@ Table.propTypes = {
 	hasDeleteMethod: PropTypes.bool,
 	onClickDeleteProject: PropTypes.func,
 	settignsLink: PropTypes.object.isRequired,
-	isImage: PropTypes.bool
+	isImage: PropTypes.bool,
+	ref: PropTypes.object
 }
 
 Table.defaultProps = {
@@ -119,4 +123,4 @@ Table.defaultProps = {
 	onClickDeleteProject: () => {},
 }
 
-export default Table
+export default React.forwardRef(Table)

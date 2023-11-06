@@ -148,7 +148,6 @@ const BrigadeSettings = ({ createSuccses, createFailed, updateSuccses, updateFai
 			if (!file) return
       
 			const url = await uploadImageOnStorage(file)
-			console.log(url)
 
 			setForm(oldForm => ({
 				...oldForm,

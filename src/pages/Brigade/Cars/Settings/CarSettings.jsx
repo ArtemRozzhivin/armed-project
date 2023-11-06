@@ -396,7 +396,6 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 	}
 
 	const updateBrigadeCar = async (data) => {
-		console.log('UPDAAAATE')
 		try {
 			const docRef = doc(db, 'brigades', id)
 

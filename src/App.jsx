@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import _includes from 'lodash/includes'
 import { useDispatch, useSelector } from 'react-redux'
 import { errorsAction } from './redux/action/errors'
 import { AlertsAction } from './redux/action/alerts'
@@ -86,13 +87,22 @@ const App = () => {
 
 	useEffect(() => {
 		if (authenticated) {
+			if (user.email === 'admin@gmail.com') {
+				return
+			}
 			getDocs(collection(db, 'access')).then((querySnapshot) => {
 				const access = querySnapshot.docs.map(doc => {
 					return { ...doc.data(), id: doc.id }
 				})
+
+				console.log(access.map((item) => item.email))
+				if (!_includes(access.map((item) => item.email), user.email)) {
+					console.log('ads')
+					navigate(routes.wait_access)
+				}
+
 				access.forEach((item) => {
-					if (item.email.split('@')[0] === user.email.split('@')[0]) {
-						console.log(item.email, user.email)
+					if (item.email === user.email) {
 						navigate(routes.brigade_cars.replace(':id', item.brigadeId))
 					}
 				})
@@ -148,6 +158,11 @@ const App = () => {
 					<Route path={routes.brigade_cars} element={<Cars />} />
 					<Route path={routes.new_car} element={<CarSettings />} />
 					<Route path={routes.edit_car} element={<CarSettings />} />
+					<Route path={routes.wait_access} element={<div>
+						<h1 className='text-black text-8xl text-center'>
+							Очікуйте доступа
+						</h1>
+					</div>} />
 					<Route
 						path="*"
 						element={<Navigate to="/" replace />}

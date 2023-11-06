@@ -9,6 +9,7 @@ const routes = Object.freeze({
 	brigade_cars: '/brigade/:id/cars',
 	new_car: '/brigade/:id/cars/new',
 	edit_car: '/brigade/:id/cars/edit/:carId',
+	wait_access: '/wait_access'
 })
 
 export default routes

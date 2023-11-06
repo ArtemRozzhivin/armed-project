@@ -15,7 +15,6 @@ const Header = ({ authenticated }) => {
 		await auth.signOut()
 		dispatch(authActions.logout())
 	}
-	console.log('auth', authenticated)
 
 	return (
 		<><Popover className='relative bg-white'>

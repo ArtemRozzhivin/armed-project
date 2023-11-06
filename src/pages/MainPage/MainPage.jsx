@@ -32,7 +32,6 @@ const MainPage = ({ brigades, getBrigades, setBrigades, deleteSuccses, deleteFai
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const tableRef = useRef(null)
 
-	console.log(tableRef)
   
 	const handleDeleteBrigade = async (id) => {
 		if(confirm('Ви впевнені, що хочете видалити бригаду?')){

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Button from '../../../../ui/Button'
 import { db } from '../../../../firebaseConfig'
-import { doc, getDoc, updateDoc, addDoc, collection } from 'firebase/firestore' 
+import { doc, getDoc, updateDoc, addDoc, collection } from 'firebase/firestore'
 import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Select from '../../../../ui/Search'
@@ -18,7 +18,7 @@ const CarsBrandArray = [
 const CarsArray = [
 	{
 		make: 'Audi', cars: [
-			{year: 2018, make: 'Audi', model: 'A7', category: 'Sedan' },
+			{ year: 2018, make: 'Audi', model: 'A7', category: 'Sedan' },
 			{ year: 2018, make: 'Audi', model: 'A4', category: 'Sedan' },
 			{ year: 2018, make: 'Audi', model: 'Q5', category: 'SUV' },
 			{
@@ -177,126 +177,241 @@ const CarsArray = [
 				model: 'Endeavor',
 				category: 'SUV'
 			},
-    
+
 		]
 	},
-	{make: 'Nissan', cars: [
-		{
-			year: 2017,
-			make: 'Nissan',
-			model: 'TITAN XD King Cab',
-			category: 'Pickup'
-		},
-		{
-			year: 2018,
-			make: 'Nissan',
-			model: 'NV3500 HD Passenger',
-			category: 'Van/Minivan'
-		},
-		{
-			year: 2018,
-			make: 'Nissan',
-			model: 'NV200',
-			category: 'Van/Minivan'
-		},
-		{
-			year: 2017,
-			make: 'Nissan',
-			model: 'TITAN XD Crew Cab',
-			category: 'Pickup'
-		},
-		{
-			year: 2017,
-			make: 'Nissan',
-			model: 'TITAN Single Cab',
-			category: 'Pickup'
-		},
-		{
-			year: 2016,
-			make: 'Nissan',
-			model: '370Z',
-			category: 'Coupe, Convertible'
-		},
-		{ year: 2019, make: 'Nissan', model: 'LEAF', category: 'Hatchback' },
-		{ year: 2019, make: 'Nissan', model: 'Sentra', category: 'Sedan' },
-		{ year: 2019, make: 'Nissan', model: 'Murano', category: 'SUV' },
-		{
-			year: 2019,
-			make: 'Nissan',
-			model: 'TITAN Single Cab',
-			category: 'Pickup'
-		},
-  
-	]},
-	{make: 'Honda', cars: [  
-		{
-			year: 2011,
-			make: 'Honda',
-			model: 'Accord Crosstour',
-			category: 'SUV'
-		},
-		{
-			year: 2011,
-			make: 'Honda',
-			model: 'Accord',
-			category: 'Sedan, Coupe'
-		},
-		{
-			year: 2011,
-			make: 'Honda',
-			model: 'Civic',
-			category: 'Sedan, Coupe'
-		},
-		{
-			year: 2014,
-			make: 'Honda',
-			model: 'Odyssey',
-			category: 'Van/Minivan'
-		},
-		{
-			year: 2014,
-			make: 'Honda',
-			model: 'Accord',
-			category: 'Sedan, Coupe'
-		},
-		{
-			year: 2019,
-			make: 'Honda',
-			model: 'Accord Hybrid',
-			category: 'Sedan'
-		},
-		{
-			year: 2019,
-			make: 'Honda',
-			model: 'Clarity Fuel Cell',
-			category: 'Sedan'
-		},
-	]},
-	{make: 'Kia', cars: [
-		{ year: 2012, make: 'Kia', model: 'Soul', category: 'Wagon' },
-		{
-			year: 2012,
-			make: 'Kia',
-			model: 'Rio',
-			category: 'Hatchback, Sedan'
-		},
-		{ year: 2015, make: 'Kia', model: 'Sorento', category: 'SUV' },
-		{ year: 2015, make: 'Kia', model: 'Cadenza', category: 'Sedan' },
-		{
-			year: 2015,
-			make: 'Kia',
-			model: 'Optima Hybrid',
-			category: 'Sedan'
-		},
-		{ year: 2017, make: 'Kia', model: 'Forte', category: 'Sedan' },
-		{ year: 2017, make: 'Kia', model: 'Forte5', category: 'Hatchback' },
-		{
-			year: 2020,
-			make: 'Kia',
-			model: 'Rio',
-			category: 'Sedan, Hatchback'
-		},  
-	]}
+	{
+		make: 'Nissan', cars: [
+			{
+				year: 2017,
+				make: 'Nissan',
+				model: 'TITAN XD King Cab',
+				category: 'Pickup'
+			},
+			{
+				year: 2018,
+				make: 'Nissan',
+				model: 'NV3500 HD Passenger',
+				category: 'Van/Minivan'
+			},
+			{
+				year: 2018,
+				make: 'Nissan',
+				model: 'NV200',
+				category: 'Van/Minivan'
+			},
+			{
+				year: 2017,
+				make: 'Nissan',
+				model: 'TITAN XD Crew Cab',
+				category: 'Pickup'
+			},
+			{
+				year: 2017,
+				make: 'Nissan',
+				model: 'TITAN Single Cab',
+				category: 'Pickup'
+			},
+			{
+				year: 2016,
+				make: 'Nissan',
+				model: '370Z',
+				category: 'Coupe, Convertible'
+			},
+			{ year: 2019, make: 'Nissan', model: 'LEAF', category: 'Hatchback' },
+			{ year: 2019, make: 'Nissan', model: 'Sentra', category: 'Sedan' },
+			{ year: 2019, make: 'Nissan', model: 'Murano', category: 'SUV' },
+			{
+				year: 2019,
+				make: 'Nissan',
+				model: 'TITAN Single Cab',
+				category: 'Pickup'
+			},
+
+		]
+	},
+	{
+		make: 'Honda', cars: [
+			{
+				year: 2011,
+				make: 'Honda',
+				model: 'Accord Crosstour',
+				category: 'SUV'
+			},
+			{
+				year: 2011,
+				make: 'Honda',
+				model: 'Accord',
+				category: 'Sedan, Coupe'
+			},
+			{
+				year: 2011,
+				make: 'Honda',
+				model: 'Civic',
+				category: 'Sedan, Coupe'
+			},
+			{
+				year: 2014,
+				make: 'Honda',
+				model: 'Odyssey',
+				category: 'Van/Minivan'
+			},
+			{
+				year: 2014,
+				make: 'Honda',
+				model: 'Accord',
+				category: 'Sedan, Coupe'
+			},
+			{
+				year: 2019,
+				make: 'Honda',
+				model: 'Accord Hybrid',
+				category: 'Sedan'
+			},
+			{
+				year: 2019,
+				make: 'Honda',
+				model: 'Clarity Fuel Cell',
+				category: 'Sedan'
+			},
+		]
+	},
+	{
+		make: 'Kia', cars: [
+			{ year: 2012, make: 'Kia', model: 'Soul', category: 'Wagon' },
+			{
+				year: 2012,
+				make: 'Kia',
+				model: 'Rio',
+				category: 'Hatchback, Sedan'
+			},
+			{ year: 2015, make: 'Kia', model: 'Sorento', category: 'SUV' },
+			{ year: 2015, make: 'Kia', model: 'Cadenza', category: 'Sedan' },
+			{
+				year: 2015,
+				make: 'Kia',
+				model: 'Optima Hybrid',
+				category: 'Sedan'
+			},
+			{ year: 2017, make: 'Kia', model: 'Forte', category: 'Sedan' },
+			{ year: 2017, make: 'Kia', model: 'Forte5', category: 'Hatchback' },
+			{
+				year: 2020,
+				make: 'Kia',
+				model: 'Rio',
+				category: 'Sedan, Hatchback'
+			},
+		]
+	},
+	{
+		make: 'КрАЗ', cars: [
+			{
+				year: 2001,
+				make: 'КрАЗ',
+				model: 'КрАЗ-6510',
+				category: 'Вантажівка'
+			},
+			{
+				year: 2002,
+				make: 'КрАЗ',
+				model: 'КрАЗ-5233',
+				category: 'Вантажівка'
+			},
+			{
+				year: 2003,
+				make: 'КрАЗ',
+				model: 'КрАЗ-6322',
+				category: 'Вантажівка'
+			},
+			{
+				year: 2004,
+				make: 'КрАЗ',
+				model: 'КрАЗ-6446',
+				category: 'Вантажівка'
+			},
+			{
+				year: 2005,
+				make: 'КрАЗ',
+				model: 'КрАЗ-260',
+				category: 'Вантажівка'
+			},
+			{
+				year: 2006,
+				make: 'КрАЗ',
+				model: 'КрАЗ-250',
+				category: 'Вантажівка'
+			},
+			{
+				year: 2007,
+				make: 'КрАЗ',
+				model: 'КрАЗ-255Б',
+				category: 'Вантажівка'
+			},
+			{
+				year: 2008,
+				make: 'КрАЗ',
+				model: 'КрАЗ-257',
+				category: 'Вантажівка'
+			},
+		]
+	},
+	{
+		make: 'КамАЗ', cars: [
+			{
+				year: 2001,
+				make: 'КамАЗ',
+				model: 'КамАЗ-4350',
+				category: 'Вантажівка'
+			},
+			{
+				year: 2002,
+				make: 'КамАЗ',
+				model: 'КамАЗ-6350',
+				category: 'Вантажівка'
+			},
+			{
+				year: 2003,
+				make: 'КамАЗ',
+				model: 'КамАЗ-43114',
+				category: 'Вантажівка'
+			},
+			{
+				year: 2004,
+				make: 'КамАЗ',
+				model: 'КамАЗ-4310',
+				category: 'Вантажівка'
+			},
+			{
+				year: 2005,
+				make: 'КамАЗ',
+				model: 'КамАЗ-5320',
+				category: 'Вантажівка'
+			},
+		]
+	},
+	{
+		make: 'Урал', cars: [
+			{
+				year: 2001,
+				make: 'Урал',
+				model: 'Урал-4320',
+				category: 'Вантажівка'
+			},
+			{
+				year: 2002,
+				make: 'Урал',
+				model: 'Урал-5323',
+				category: 'Вантажівка'
+			},
+		]
+	},
+]
+
+const StatusList = [
+	'Підлягає списанню',
+	'У ремонті',
+	'Справний',
+	'Виконує завдання',
 ]
 
 const CarsEngineArray = [
@@ -310,7 +425,7 @@ const CarsEngineArray = [
 ]
 
 
-const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed, getBrigades, userEmail }) => {
+const CarsSettings = ({ updateSuccses, updateFailed, createSuccses, createFailed, getBrigades, userEmail }) => {
 	const { id, carId } = useParams()
 	const navigate = useNavigate()
 	const [brigade, setBrigade] = useState({
@@ -325,6 +440,8 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 		year: '',
 		category: '',
 		engine: '',
+		position: '',
+		status: '',
 	})
 	const [brandmodels, setBrandmodels] = useState([])
 	const [isLoading, setIsLoading] = useState(false)
@@ -332,24 +449,24 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 		try {
 			const docRef = doc(db, 'brigades', id)
 			const docBrigade = await getDoc(docRef)
-			const {title, cars} = docBrigade.data()
-			setBrigade({title, cars})
+			const { title, cars } = docBrigade.data()
+			setBrigade({ title, cars })
 
 
-			if(carId) {
+			if (carId) {
 				const editingCar = cars.find((car) => car.id === carId)
-				if(editingCar) {
+				if (editingCar) {
 					setForm(editingCar)
 					setBrandmodels(CarsArray.filter((car) => car.make === editingCar.make)[0].cars)
 				}
 			}
-        
+
 		} catch (error) {
 			console.log(error)
 		}
 	}
 
-	if(id) {
+	if (id) {
 		useEffect(() => {
 			getBrigadeById()
 		}, [])
@@ -379,7 +496,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 			})
 
 			createSuccses()
-      
+
 			setForm({
 				id: '',
 				make: '',
@@ -387,6 +504,8 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 				mileage: '',
 				year: '',
 				category: '',
+				position: '',
+				status: '',
 			})
 			getBrigades()
 		} catch (error) {
@@ -400,7 +519,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 			const docRef = doc(db, 'brigades', id)
 
 			const newCars = brigade.cars.map((car) => {
-				if(car.id === carId) {
+				if (car.id === carId) {
 					return {
 						...car,
 						...data,
@@ -409,14 +528,14 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 				}
 
 				return car
-			}) 
+			})
 
 
 			await updateDoc(docRef, {
 				cars: [...newCars]
 			})
 			updateSuccses()
-			
+
 			const docRefActions = collection(db, 'actionss')
 			await addDoc(docRefActions, {
 				date: new Date().toLocaleDateString(),
@@ -430,6 +549,8 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 				mileage: '',
 				year: '',
 				category: '',
+				position: '',
+				status: '',
 			})
 			getBrigades()
 			navigate(_replace(routes.brigade_cars, ':id', id))
@@ -443,7 +564,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 	const onSubmit = data => {
 		if (!isLoading) {
 			setIsLoading(true)
-			if(carId) {
+			if (carId) {
 				updateBrigadeCar(data)
 
 			} else {
@@ -493,22 +614,26 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 	}
 
 	return (
-		<div className='min-h-page bg-gray-50 flex flex-col py-6 px-4 sm:px-6 lg:px-8'>      
+		<div className='min-h-page bg-gray-50 flex flex-col py-6 px-4 sm:px-6 lg:px-8'>
 			<form className='max-w-[800px] w-full mx-auto flex flex-col gap-10' onSubmit={handleSubmit}>
 				<h2 className='mt-2 text-3xl font-bold text-gray-900 '>
 					{carId ? <span>Змінити дані автомобілю</span> : <span>Додати автомобіль {brigade.title ? <span>для бригади {brigade.title}</span> : ''}</span>}
 				</h2>
 
 				<div>
-					<Select label="Марка" id="brand" items={CarsBrandArray} title={form.make ? form.make : 'Марка'} onSelect={(value) => handleBrandSelect(value)}/>
+					<Select label="Марка" id="brand" items={CarsBrandArray} title={form.make ? form.make : 'Марка'} onSelect={(value) => handleBrandSelect(value)} />
 				</div>
 
 				<div>
-					<Select disabled={!form.make} label="Модель" id="model" items={brandmodels} title={form.model ? <span>{form.model}, {form.year}, {form.category}</span> : 'Модель'} onSelect={(value) => handlemodelSelect(value)}/>
+					<Select disabled={!form.make} label="Модель" id="model" items={brandmodels} title={form.model ? <span>{form.model}, {form.year}, {form.category}</span> : 'Модель'} onSelect={(value) => handlemodelSelect(value)} />
 				</div>
 
 				<div>
-					<Select disabled={!form.model} label="Двигун" id="engine" items={CarsEngineArray} title={form.engine ? form.engine : 'Двигун'} onSelect={(value) => handleEngineSelect(value)}/>
+					<Select disabled={!form.model} label="Двигун" id="engine" items={CarsEngineArray} title={form.engine ? form.engine : 'Двигун'} onSelect={(value) => handleEngineSelect(value)} />
+				</div>
+
+				<div>
+					<Select label="Статус" id="status" items={StatusList} title={form.status ? form.status : 'Статус'} onSelect={(value) => handleInput({ target: { name: 'status', value: value } })} />
 				</div>
 
 				<Input
@@ -520,6 +645,15 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 					placeholder='12000'
 					onChange={handleInput}
 				/>
+				<Input
+					name='position'
+					id='position'
+					type='text'
+					label='Адрес'
+					value={form.position}
+					placeholder=''
+					onChange={handleInput}
+				/>
 
 				<div className='flex justify-between mt-10'>
 					<Link to={-1}>
@@ -527,7 +661,7 @@ const CarsSettings = ({updateSuccses, updateFailed, createSuccses, createFailed,
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
 								<path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
 							</svg>
-						</Button> 
+						</Button>
 					</Link>
 					<Button disabled={!form.make || !form.model || !form.engine} type='submit' primary large>
 						{carId ? <span>Змінити</span> : <span>Створити</span>}

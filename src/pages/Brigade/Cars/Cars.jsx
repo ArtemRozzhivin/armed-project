@@ -159,15 +159,15 @@ const Cars = ({ brigades, deleteSuccses, deleteFailed, userEmail }) => {
 				</div>)}
 			</div>
 
-			<div className='py-8 mx-auto max-w-[1200px]'>
+			<div className='py-8 mx-auto max-w-[1400px]'>
 				{(brigade.cars.length === 0 ? <div className='text-4xl font-semibold flex justify-center items-center text-emerald-700 mt-20'>Автомобілі відсутні</div> :
 					<Table
 						ref={tableRef}
 						settignsLink={{ route: _replace(routes.edit_car, ':id', brigade.id), param: ':carId' }}
 						hasDeleteMethod onClickDeleteProject={(id) => handleDeleteCar(id)}
-						fieldsName={['make', 'model', 'category', 'year', 'engine', 'mileage']}
+						fieldsName={['make', 'model', 'category', 'year', 'engine', 'status', 'position', 'mileage']}
 						results={brigade.cars}
-						spreadsheetTitles={['Марка', 'Модель', 'Тип', 'Рік', 'Двигун', 'Пробіг', 'Змінити / Видалити']}>
+						spreadsheetTitles={['Марка', 'Модель', 'Тип', 'Рік', 'Двигун', 'Статус', 'Геопозиція', 'Пробіг', 'Змінити / Видалити']}>
 					</Table>
 				)}
 			</div>

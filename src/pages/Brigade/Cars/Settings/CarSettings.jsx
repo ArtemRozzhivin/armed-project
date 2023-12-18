@@ -12,7 +12,7 @@ import { withAuthentication, Auth } from '../../../../hoc/protected'
 import { Link, useNavigate } from 'react-router-dom'
 
 const CarsBrandArray = [
-	'Audi', 'BMW', 'Toyota', 'Mitsubishi', 'Nissan', 'Honda', 'Kia'
+	'Audi', 'BMW', 'Toyota', 'Mitsubishi', 'Nissan', 'Honda', 'Kia', 'КамАЗ', 'Урал', 'КрАЗ'
 ]
 
 const CarsArray = [
